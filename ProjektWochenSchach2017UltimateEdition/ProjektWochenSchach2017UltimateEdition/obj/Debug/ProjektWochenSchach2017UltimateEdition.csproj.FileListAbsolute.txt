@@ -1,0 +1,2 @@
+D:\Visual Studio Projekte\ProjektWochenSchach2017UltimateEdition\ProjektWochenSchach2017UltimateEdition\bin\Debug\ProjektWochenSchach2017UltimateEdition.exe.config
+C:\Users\Marvin\Source\Repos\ProjektWochenSchach2017UltimateEdition\ProjektWochenSchach2017UltimateEdition\ProjektWochenSchach2017UltimateEdition\bin\Debug\ProjektWochenSchach2017UltimateEdition.exe.config
