@@ -63,7 +63,7 @@ namespace SchachTest
                    
                     if (positionY == 100 || positionY == 350)
                     {
-                        PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\b.PNG");
+                        //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\b.PNG");
                     } 
                 }
                 positionX = 50;

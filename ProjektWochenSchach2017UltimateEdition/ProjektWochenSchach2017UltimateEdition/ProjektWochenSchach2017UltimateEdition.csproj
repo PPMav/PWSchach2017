@@ -47,15 +47,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Figur.cs" />
+    <Compile Include="bishopFigureClass.cs" />
+    <Compile Include="Figure.cs" />
+    <Compile Include="figureClass.cs" />
     <Compile Include="FrmSchach.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FrmSchach.designer.cs">
       <DependentUpon>FrmSchach.cs</DependentUpon>
     </Compile>
+    <Compile Include="horseFigureClass.cs" />
+    <Compile Include="kingFigureClass.cs" />
+    <Compile Include="pawnFigureClass.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="queenFigureClass.cs" />
+    <Compile Include="towerFigureClass.cs" />
     <EmbeddedResource Include="FrmSchach.resx">
       <DependentUpon>FrmSchach.cs</DependentUpon>
     </EmbeddedResource>
