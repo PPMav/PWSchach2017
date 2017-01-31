@@ -12,14 +12,14 @@ namespace SchachTest
 {
     public partial class FrmSchach : Form
     {
+        #region Var
         bool Start = true;
         bool ErsterZug = true;
         public List<Figur> Figuren = new List<Figur>();
         List<PictureBox> Pbx = new List<PictureBox>();
         Figur[,] FigurenL = new Figur[8, 8];
         PictureBox[,] PictureL = new PictureBox[8, 8];
-        
-
+        #endregion
 
         public FrmSchach()
         {            
@@ -29,27 +29,14 @@ namespace SchachTest
                 PbxErstellen();
                 FigurenErzeugen();
             }            
-        }
-        
-        private void A7_Click(object sender, EventArgs e)
-        {
-            if (ErsterZug == true)
-            {
-
-            }
-            else
-            {
-
-            }
-                  
-        }
-
+        }        
+       
         private void FigurenErzeugen()
         {
             #region
             Start = false;
             int positionX = 50;
-            int positionY = 50;            
+            int positionY = 50;
             for (int y = 0; y < 8; y++)
             {
                 for (int x = 0; x < 8; x++)
@@ -83,8 +70,8 @@ namespace SchachTest
                         FigurenL[x, y].Aktiv = true;
                         FigurenL[x, y].Rolle = "Turm";
                         FigurenL[x, y].Spieler = "weiß";
-                        PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\TW.PNG");                      
-                    }                     
+                        PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\TW.PNG");
+                    }
                     else if (positionY == 50 && (positionX == 50 || positionX == 400))
                     {
                         Figur BW = new Figur();
@@ -115,7 +102,7 @@ namespace SchachTest
                         }
                     }
                     #endregion
-                                         
+
                     #region Läufer
                     else if (positionY == 50 && (positionX == 150 || positionX == 300) || positionY == 400 && (positionX == 150 || positionX == 300))
                     {
@@ -135,14 +122,14 @@ namespace SchachTest
                         }
                     }
                     #endregion
-                    
-                    #region Königin
-                    else if (positionY == 50 && positionX == 250 || positionY == 400 && positionX == 200)
+
+                    #region König
+                    else if (positionY == 50 && positionX == 250 || positionY == 400 && positionX == 250)
                     {
                         Figur BW = new Figur();
                         FigurenL[x, y] = BW;
                         FigurenL[x, y].Aktiv = true;
-                        FigurenL[x, y].Rolle = "Königin";
+                        FigurenL[x, y].Rolle = "König";
                         if (positionY == 50)
                         {
                             FigurenL[x, y].Spieler = "schwarz";
@@ -156,13 +143,13 @@ namespace SchachTest
                     }
                     #endregion
 
-                    #region König
-                    else if (positionY == 50 && positionX == 200 || positionY == 400 && positionX == 250)
+                    #region Königin
+                    else if (positionY == 50 && positionX == 200 || positionY == 400 && positionX == 200)
                     {
                         Figur BW = new Figur();
                         FigurenL[x, y] = BW;
                         FigurenL[x, y].Aktiv = true;
-                        FigurenL[x, y].Rolle = "König";
+                        FigurenL[x, y].Rolle = "Königin";
                         if (positionY == 50)
                         {
                             FigurenL[x, y].Spieler = "schwarz";
@@ -170,19 +157,18 @@ namespace SchachTest
                         }
                         else
                         {
-                            FigurenL[x, y].Spieler = "weiß";
                             PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\KW.PNG");
                         }
-                    }
                     #endregion
-                    
+
+                        
+                    }
                     positionX = positionX + 50;
                 }
                 positionX = 50;
-                positionY = positionY + 50;  
+                positionY = positionY + 50;
             }
-            
-            #endregion            
+            #endregion
         }
                        
         private void PbxErstellen()
@@ -197,16 +183,17 @@ namespace SchachTest
                     PictureL[x, y] = pb;                    
                     if (positionY % 100 == 0 && positionX % 100 == 0 || positionY % 100 == 50 && positionX % 100 == 50)
                     {
-                        pb.BackColor = Color.Gray;                    
+                        pb.BackColor = Color.Gray;                        
                     }
                     else
-                    {
-                        pb.BackColor = Color.White;
+                    {                        
+                        pb.BackColor = Color.White;                        
                     }                    
                     pb.Location = new System.Drawing.Point(positionX, positionY);
                     pb.Size = new System.Drawing.Size(50, 50);
                     pb.TabIndex = 49;
                     pb.TabStop = false;
+                    pb.Click += new System.EventHandler(TurmBewegen);
                     positionX = positionX + 50;
                     pb.BorderStyle = BorderStyle.FixedSingle;
                     Controls.Add(pb);
@@ -215,8 +202,8 @@ namespace SchachTest
                 positionX = 50;
                 positionY = positionY + 50;
             }
-        }        
-
+        }
+        
         public void FigurenZuweisen(List<Figur> Figuren)
         {
             string[] Buchstaben = new string[]{"A", "B", "C", "D", "E", "F", "G", "H"};
@@ -246,6 +233,56 @@ namespace SchachTest
         {
 
         }
+
+        private void TurmBewegen(object sender, EventArgs e)
+        {
+            
+        }       
         
+        private bool BewegungOK(Figur F, int PositionXAlt , int PositionYAlt, int PositionXNeu , int PositionYNeu)
+        {
+            bool ok = true;
+            string gegner = "schwarz";
+            if (F.Spieler != "weiß")
+	        {
+		        gegner = "weiß";
+	        }
+            if (F.Rolle == "Turm")
+            {
+                if (PositionXAlt != PositionXNeu && PositionYAlt != PositionYNeu)
+                {
+                    ok = false;
+                }
+                else if (PositionXAlt != PositionXNeu && PositionYAlt == PositionYNeu)
+                {
+                    if (PositionXAlt > PositionXNeu)
+                    {
+                        for (int i = PositionXAlt; i > (PositionXNeu); i--)
+                        {
+                            if (FigurenL[PositionXAlt,PositionYAlt].Spieler == FigurenL[i, PositionYNeu].Spieler)
+                            {
+                                ok = false;
+                            }
+                            else if (FigurenL[i - 1, PositionYNeu].Spieler == gegner)
+                            {
+                                ok = false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 8 - PositionXAlt; i++)
+                        {
+
+                        }
+                    }
+                }
+                else if (PositionXAlt == PositionXNeu && PositionYAlt != PositionYNeu)
+                {
+                    
+                }
+            }
+            return ok;
+        }
     }
 }

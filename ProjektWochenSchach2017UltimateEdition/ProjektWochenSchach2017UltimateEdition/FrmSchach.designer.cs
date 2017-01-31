@@ -213,7 +213,6 @@
             this.Controls.Add(this.label1);
             this.Name = "FrmSchach";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.FrmSchach_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
