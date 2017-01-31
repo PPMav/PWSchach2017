@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjektWochenSchach2017UltimateEdition;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,10 +16,9 @@ namespace SchachTest
         #region Var
         bool Start = true;
         bool ErsterZug = true;
-        public List<Figur> Figuren = new List<Figur>();
-        List<PictureBox> Pbx = new List<PictureBox>();
         Figur[,] FigurenL = new Figur[8, 8];
         PictureBox[,] PictureL = new PictureBox[8, 8];
+        figureClass[,] figurenArray = new figureClass[8, 8];
         #endregion
 
         public FrmSchach()
@@ -49,7 +49,7 @@ namespace SchachTest
                         FigurenL[x, y].Aktiv = true;
                         FigurenL[x, y].Rolle = "Bauer";
                         FigurenL[x, y].Spieler = "schwarz";
-                        PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\BS.PNG");
+                        //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\BS.PNG");
                     }
                     else if (positionY == 350)
                     {
@@ -58,7 +58,7 @@ namespace SchachTest
                         FigurenL[x, y].Aktiv = true;
                         FigurenL[x, y].Rolle = "Bauer";
                         FigurenL[x, y].Spieler = "weiß";
-                        PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\BW.PNG");
+                        //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\BW.PNG");
                     }
                     #endregion
 
@@ -70,7 +70,7 @@ namespace SchachTest
                         FigurenL[x, y].Aktiv = true;
                         FigurenL[x, y].Rolle = "Turm";
                         FigurenL[x, y].Spieler = "weiß";
-                        PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\TW.PNG");
+                        //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\TW.PNG");
                     }
                     else if (positionY == 50 && (positionX == 50 || positionX == 400))
                     {
@@ -79,7 +79,7 @@ namespace SchachTest
                         FigurenL[x, y].Aktiv = true;
                         FigurenL[x, y].Rolle = "Turm";
                         FigurenL[x, y].Spieler = "schwarz";
-                        PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\TS.PNG");
+                        //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\TS.PNG");
                     }
                     #endregion
 
@@ -93,12 +93,12 @@ namespace SchachTest
                         if (positionY == 50)
                         {
                             FigurenL[x, y].Spieler = "schwarz";
-                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\SS.PNG");
+                            //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\SS.PNG");
                         }
                         else
                         {
                             FigurenL[x, y].Spieler = "weiß";
-                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\SW.PNG");
+                            //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\SW.PNG");
                         }
                     }
                     #endregion
@@ -113,12 +113,12 @@ namespace SchachTest
                         if (positionY == 50)
                         {
                             FigurenL[x, y].Spieler = "schwarz";
-                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\LS.PNG");
+                            //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\LS.PNG");
                         }
                         else
                         {
                             FigurenL[x, y].Spieler = "weiß";
-                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\LW.PNG");
+                            //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\LW.PNG");
                         }
                     }
                     #endregion
@@ -133,12 +133,12 @@ namespace SchachTest
                         if (positionY == 50)
                         {
                             FigurenL[x, y].Spieler = "schwarz";
-                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\KÖS.PNG");
+                            //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\KÖS.PNG");
                         }
                         else
                         {
                             FigurenL[x, y].Spieler = "weiß";
-                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\KÖW.PNG");
+                            //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\KÖW.PNG");
                         }
                     }
                     #endregion
@@ -153,16 +153,16 @@ namespace SchachTest
                         if (positionY == 50)
                         {
                             FigurenL[x, y].Spieler = "schwarz";
-                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\KS.PNG");
+                            //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\KS.PNG");
                         }
                         else
                         {
-                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\KW.PNG");
+                            //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\KW.PNG");
                         }
+                    }
                     #endregion
 
                         
-                    }
                     positionX = positionX + 50;
                 }
                 positionX = 50;
@@ -171,6 +171,88 @@ namespace SchachTest
             #endregion
         }
                        
+        private void InitializeFigures()
+        {
+            int posX = 50;
+            int posY = 50;
+
+            for (int y = 0; y < 8; y++)
+            {
+                for (int x = 0; x < 8; x++)
+                {
+                    #region Pawn
+                    if (posY == 100)
+                    {
+                        pawnFigureClass pawnBlack = new pawnFigureClass();
+                        figurenArray[x, y] = pawnBlack;
+
+                        pawnBlack.side = false;
+                        pawnBlack.active = true;
+                        pawnBlack.positionX = x;
+                        pawnBlack.positionY = y;
+                        pawnBlack.role = "Pawn";
+                    }
+                    else if (posY == 350)
+                    {
+                        pawnFigureClass pawnWhite = new pawnFigureClass();
+                        figurenArray[x, y] = pawnWhite;
+
+                        figurenArray[x, y].side = true;
+                        figurenArray[x, y].active = true;
+                        figurenArray[x, y].positionX = x;
+                        figurenArray[x, y].positionY = y;
+                        figurenArray[x, y].role = "Pawn";
+                    }
+                    #endregion
+                    #region Towers
+                    else if (posY == 400 && (posX == 50 || posX == 400))
+                    {
+                        towerFigureClass towerBlack = new towerFigureClass();
+                        figurenArray[x, y] = towerBlack;
+                        figurenArray[x, y].side = false;
+                        figurenArray[x, y].active = true;
+                        figurenArray[x, y].positionX = x;
+                        figurenArray[x, y].positionY = y;
+                        figurenArray[x, y].role = "Tower"; 
+                        
+                    }
+                    else if (posY == 50 && (posX == 50 || posX == 400))
+                    {
+                        towerFigureClass towerWhite = new towerFigureClass();
+                        figurenArray[x, y] = towerWhite;
+                        figurenArray[x, y].side = true;
+                        figurenArray[x, y].active = true;
+                        figurenArray[x, y].positionX = x;
+                        figurenArray[x, y].positionY = y;
+                        figurenArray[x, y].role = "Tower";
+                    }
+                    #endregion
+                    #region Bishops
+                    else if ((posY == 50 && (posX == 100 || posX == 350)) || (posY == 400 && (posX == 100 || posX == 350)))
+                    {
+                        bishopFigureClass bishop = new bishopFigureClass();
+                        figurenArray[x, y] = bishop;
+                        figurenArray[x, y].active = true;
+                        figurenArray[x, y].positionX = x;
+                        figurenArray[x, y].positionY = y;
+                        figurenArray[x, y].role = "Bishop";
+
+                        if (posY == 50)
+                        {
+                            figurenArray[x, y].side = false;
+                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\SS.PNG");
+                        }
+                        else
+                        {
+                            figurenArray[x, y].side = true;
+                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\SW.PNG");
+                        }
+                        #endregion
+                    }
+                }
+            }
+        }
+
         private void PbxErstellen()
         {
             int positionX = 50;
@@ -283,6 +365,11 @@ namespace SchachTest
                 }
             }
             return ok;
+        }
+
+        private void FrmSchach_Load_1(object sender, EventArgs e)
+        {
+            
         }
     }
 }

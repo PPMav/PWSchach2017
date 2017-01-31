@@ -12,7 +12,7 @@ namespace ProjektWochenSchach2017UltimateEdition
         {
             throw new NotImplementedException();
         }
-        public override void Movement()
+        public override bool Movement()
         {
             throw new NotImplementedException();
         }

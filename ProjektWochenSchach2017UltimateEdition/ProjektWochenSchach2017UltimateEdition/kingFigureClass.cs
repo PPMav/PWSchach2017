@@ -8,7 +8,7 @@ namespace ProjektWochenSchach2017UltimateEdition
 {
     class kingFigureClass : figureClass 
     {
-        public override void Movement()
+        public override bool Movement()
         {
             throw new NotImplementedException();
         }

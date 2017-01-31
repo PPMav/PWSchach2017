@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ProjektWochenSchach2017UltimateEdition
 {
-    class towerFigureClass : figureClass
+    public class towerFigureClass : figureClass
     {
-        public override void Movement()
+        public override bool Movement()
         {
             throw new NotImplementedException();
         }

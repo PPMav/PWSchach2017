@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 
 namespace ProjektWochenSchach2017UltimateEdition
 {
-    abstract class figureClass
+    public abstract class figureClass
     {
-        protected bool side;
-        protected string role;
-        protected string positionX;
-        protected string positionY;
-        protected bool active;
+        //true = white | false = black
+        public bool side;
+        public string role;
+        public int positionX;
+        public int positionY;
+        public bool active;
 
-        public abstract void Movement();
+        public abstract bool Movement();
 
         public abstract void Slaying();
 
