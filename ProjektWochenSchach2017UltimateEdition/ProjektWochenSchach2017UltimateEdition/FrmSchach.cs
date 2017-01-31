@@ -49,22 +49,134 @@ namespace SchachTest
             #region
             Start = false;
             int positionX = 50;
-            int positionY = 50;
-            int hochzählen = 0;
+            int positionY = 50;            
             for (int y = 0; y < 8; y++)
             {
                 for (int x = 0; x < 8; x++)
                 {
-                    Figur F = new Figur();
-                    FigurenL[x, y] = F;
-                    FigurenL[x,y].Aktiv = true;
-                    FigurenL[x,y].Rolle = "Bauer";                
-                    
-                   
-                    if (positionY == 100 || positionY == 350)
+                    #region Bauer
+                    if (positionY == 100)
                     {
-                        PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\b.PNG");
-                    } 
+                        Figur BW = new Figur();
+                        FigurenL[x, y] = BW;
+                        FigurenL[x, y].Aktiv = true;
+                        FigurenL[x, y].Rolle = "Bauer";
+                        FigurenL[x, y].Spieler = "schwarz";
+                        PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\BS.PNG");
+                    }
+                    else if (positionY == 350)
+                    {
+                        Figur BS = new Figur();
+                        FigurenL[x, y] = BS;
+                        FigurenL[x, y].Aktiv = true;
+                        FigurenL[x, y].Rolle = "Bauer";
+                        FigurenL[x, y].Spieler = "weiß";
+                        PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\BW.PNG");
+                    }
+                    #endregion
+
+                    #region Turm
+                    else if (positionY == 400 && (positionX == 50 || positionX == 400))
+                    {
+                        Figur BW = new Figur();
+                        FigurenL[x, y] = BW;
+                        FigurenL[x, y].Aktiv = true;
+                        FigurenL[x, y].Rolle = "Turm";
+                        FigurenL[x, y].Spieler = "weiß";
+                        PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\TW.PNG");                      
+                    }                     
+                    else if (positionY == 50 && (positionX == 50 || positionX == 400))
+                    {
+                        Figur BW = new Figur();
+                        FigurenL[x, y] = BW;
+                        FigurenL[x, y].Aktiv = true;
+                        FigurenL[x, y].Rolle = "Turm";
+                        FigurenL[x, y].Spieler = "schwarz";
+                        PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\TS.PNG");
+                    }
+                    #endregion
+
+                    #region Springer
+                    else if ((positionY == 50 && (positionX == 100 || positionX == 350)) || (positionY == 400 && (positionX == 100 || positionX == 350)))
+                    {
+                        Figur BW = new Figur();
+                        FigurenL[x, y] = BW;
+                        FigurenL[x, y].Aktiv = true;
+                        FigurenL[x, y].Rolle = "Springer";
+                        if (positionY == 50)
+                        {
+                            FigurenL[x, y].Spieler = "schwarz";
+                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\SS.PNG");
+                        }
+                        else
+                        {
+                            FigurenL[x, y].Spieler = "weiß";
+                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\SW.PNG");
+                        }
+                    }
+                    #endregion
+                                         
+                    #region Läufer
+                    else if (positionY == 50 && (positionX == 150 || positionX == 300) || positionY == 400 && (positionX == 150 || positionX == 300))
+                    {
+                        Figur BW = new Figur();
+                        FigurenL[x, y] = BW;
+                        FigurenL[x, y].Aktiv = true;
+                        FigurenL[x, y].Rolle = "Läufer";
+                        if (positionY == 50)
+                        {
+                            FigurenL[x, y].Spieler = "schwarz";
+                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\LS.PNG");
+                        }
+                        else
+                        {
+                            FigurenL[x, y].Spieler = "weiß";
+                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\LW.PNG");
+                        }
+                    }
+                    #endregion
+                    
+                    #region Königin
+                    else if (positionY == 50 && positionX == 250 || positionY == 400 && positionX == 200)
+                    {
+                        Figur BW = new Figur();
+                        FigurenL[x, y] = BW;
+                        FigurenL[x, y].Aktiv = true;
+                        FigurenL[x, y].Rolle = "Königin";
+                        if (positionY == 50)
+                        {
+                            FigurenL[x, y].Spieler = "schwarz";
+                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\KÖS.PNG");
+                        }
+                        else
+                        {
+                            FigurenL[x, y].Spieler = "weiß";
+                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\KÖW.PNG");
+                        }
+                    }
+                    #endregion
+
+                    #region König
+                    else if (positionY == 50 && positionX == 200 || positionY == 400 && positionX == 250)
+                    {
+                        Figur BW = new Figur();
+                        FigurenL[x, y] = BW;
+                        FigurenL[x, y].Aktiv = true;
+                        FigurenL[x, y].Rolle = "König";
+                        if (positionY == 50)
+                        {
+                            FigurenL[x, y].Spieler = "schwarz";
+                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\KS.PNG");
+                        }
+                        else
+                        {
+                            FigurenL[x, y].Spieler = "weiß";
+                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\KW.PNG");
+                        }
+                    }
+                    #endregion
+                    
+                    positionX = positionX + 50;
                 }
                 positionX = 50;
                 positionY = positionY + 50;  
@@ -85,11 +197,11 @@ namespace SchachTest
                     PictureL[x, y] = pb;                    
                     if (positionY % 100 == 0 && positionX % 100 == 0 || positionY % 100 == 50 && positionX % 100 == 50)
                     {
-                        pb.BackColor = Color.Gray;                        
+                        pb.BackColor = Color.Gray;                    
                     }
                     else
-                    {                        
-                        pb.BackColor = Color.White;                        
+                    {
+                        pb.BackColor = Color.White;
                     }                    
                     pb.Location = new System.Drawing.Point(positionX, positionY);
                     pb.Size = new System.Drawing.Size(50, 50);
@@ -103,8 +215,7 @@ namespace SchachTest
                 positionX = 50;
                 positionY = positionY + 50;
             }
-        }
-        
+        }        
 
         public void FigurenZuweisen(List<Figur> Figuren)
         {
@@ -115,7 +226,7 @@ namespace SchachTest
                 if (i >= 0 && i < 16)
                 {
                     Figuren[i].Aktiv = true;
-                    Figuren[i].Spieler = true;
+                    Figuren[i].Spieler = "weiß";
                     Figuren[i].Rolle = "Bauer";
                     //Figuren[i].PositionX = Buchstaben[i];
                     //Figuren[i].PositionY = Zahlen[1];
@@ -123,7 +234,7 @@ namespace SchachTest
                 else
                 {
                     Figuren[i].Aktiv = true;
-                    Figuren[i].Spieler = false;
+                    Figuren[i].Spieler = "schwarz";
                     Figuren[i].Rolle = "Bauer";
                     //Figuren[i].PositionX = Buchstaben[i/2];
                     //Figuren[i].PositionY = Zahlen[6];

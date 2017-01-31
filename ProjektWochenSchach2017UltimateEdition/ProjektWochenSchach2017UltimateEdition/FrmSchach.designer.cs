@@ -121,11 +121,11 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(4, 44);
+            this.label9.Location = new System.Drawing.Point(-2, 44);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(13, 13);
             this.label9.TabIndex = 73;
-            this.label9.Text = "1";
+            this.label9.Text = "8";
             // 
             // label10
             // 
@@ -134,7 +134,7 @@
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(13, 13);
             this.label10.TabIndex = 74;
-            this.label10.Text = "2";
+            this.label10.Text = "7";
             // 
             // label11
             // 
@@ -143,7 +143,7 @@
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(13, 13);
             this.label11.TabIndex = 75;
-            this.label11.Text = "3";
+            this.label11.Text = "6";
             // 
             // label12
             // 
@@ -152,7 +152,7 @@
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(13, 13);
             this.label12.TabIndex = 76;
-            this.label12.Text = "4";
+            this.label12.Text = "5";
             // 
             // label13
             // 
@@ -161,7 +161,7 @@
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(13, 13);
             this.label13.TabIndex = 77;
-            this.label13.Text = "5";
+            this.label13.Text = "4";
             // 
             // label14
             // 
@@ -170,7 +170,7 @@
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(13, 13);
             this.label14.TabIndex = 78;
-            this.label14.Text = "6";
+            this.label14.Text = "3";
             // 
             // label15
             // 
@@ -179,7 +179,7 @@
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(13, 13);
             this.label15.TabIndex = 79;
-            this.label15.Text = "7";
+            this.label15.Text = "2";
             // 
             // label16
             // 
@@ -188,7 +188,7 @@
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(13, 13);
             this.label16.TabIndex = 80;
-            this.label16.Text = "8";
+            this.label16.Text = "1";
             // 
             // FrmSchach
             // 
