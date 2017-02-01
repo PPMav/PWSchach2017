@@ -15,7 +15,7 @@ namespace ProjektWochenSchach2017UltimateEdition
         public int positionY;
         public bool active;
 
-        public abstract bool Movement();
+        public abstract bool Movement(int newPosX, int newPosY, bool player);
 
         public abstract void Slaying();
 

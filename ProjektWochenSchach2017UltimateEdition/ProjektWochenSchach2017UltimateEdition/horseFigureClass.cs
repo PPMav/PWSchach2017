@@ -12,9 +12,28 @@ namespace ProjektWochenSchach2017UltimateEdition
         {
             throw new NotImplementedException();
         }
-        public override bool Movement()
+        public override bool Movement(int newPosX, int newPosY, bool player)
         {
-            throw new NotImplementedException();
+            if ((newPosX == positionX + 1 || newPosX == positionX - 1) && newPosY == positionY - 2)
+            {
+                return true;
+            }
+            else if (newPosX == positionX - 2 && (newPosY == positionY - 1 || newPosY == positionY + 1))
+            {
+                return true;
+            }
+            else if ((newPosX == positionX + 1 || newPosX == positionX - 1) && newPosY == positionY + 2)
+            {
+                return true;
+            }
+            else if (newPosX == positionX + 2 && (newPosY == positionY - 1 || newPosY == positionY + 1))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         
     }

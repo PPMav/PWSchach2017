@@ -8,9 +8,28 @@ namespace ProjektWochenSchach2017UltimateEdition
 {
     class kingFigureClass : figureClass 
     {
-        public override bool Movement()
+        public override bool Movement(int newPosX, int newPosY, bool player)
         {
-            throw new NotImplementedException();
+            if (newPosY == positionY +1 && (newPosX == positionX +1 || newPosX == positionX -1))
+            {
+                return true;
+            }
+            else if(newPosY == positionY - 1 && (newPosX == positionX + 1 || newPosX == positionX - 1))
+            {
+                return true;
+            }
+            else if (newPosX == positionX && (newPosY == positionY +1 || newPosY == positionY -1))
+            {
+                return true;
+            }
+            else if (newPosY == positionY && (newPosX == positionX +1 || newPosX == positionX -1))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public override void Slaying()
         {

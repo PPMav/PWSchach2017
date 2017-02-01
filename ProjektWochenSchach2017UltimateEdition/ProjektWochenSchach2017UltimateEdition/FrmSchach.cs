@@ -14,162 +14,20 @@ namespace SchachTest
     public partial class FrmSchach : Form
     {
         #region Var
-        bool Start = true;
-        bool ErsterZug = true;
-        Figur[,] FigurenL = new Figur[8, 8];
-        PictureBox[,] PictureL = new PictureBox[8, 8];
-        figureClass[,] figurenArray = new figureClass[8, 8];
+        bool playerTurn = true; //true = white , false = black
+        int[] selectedFigure = new int[2];
+        PictureBox[,] chessboardArray = new PictureBox[8, 8];
+        PictureBox[,] figurepicturesArray = new PictureBox[8, 8];
+        figureClass[,] figureArray = new figureClass[8, 8];
         #endregion
 
         public FrmSchach()
         {            
             InitializeComponent();
-            if (Start == true)
-            {                
-                PbxErstellen();
-                FigurenErzeugen();
-            }            
+                      
         }        
        
-        private void FigurenErzeugen()
-        {
-            #region
-            Start = false;
-            int positionX = 50;
-            int positionY = 50;
-            for (int y = 0; y < 8; y++)
-            {
-                for (int x = 0; x < 8; x++)
-                {
-                    #region Bauer
-                    if (positionY == 100)
-                    {
-                        Figur BW = new Figur();
-                        FigurenL[x, y] = BW;
-                        FigurenL[x, y].Aktiv = true;
-                        FigurenL[x, y].Rolle = "Bauer";
-                        FigurenL[x, y].Spieler = "schwarz";
-                        //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\BS.PNG");
-                    }
-                    else if (positionY == 350)
-                    {
-                        Figur BS = new Figur();
-                        FigurenL[x, y] = BS;
-                        FigurenL[x, y].Aktiv = true;
-                        FigurenL[x, y].Rolle = "Bauer";
-                        FigurenL[x, y].Spieler = "weiß";
-                        //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\BW.PNG");
-                    }
-                    #endregion
-
-                    #region Turm
-                    else if (positionY == 400 && (positionX == 50 || positionX == 400))
-                    {
-                        Figur BW = new Figur();
-                        FigurenL[x, y] = BW;
-                        FigurenL[x, y].Aktiv = true;
-                        FigurenL[x, y].Rolle = "Turm";
-                        FigurenL[x, y].Spieler = "weiß";
-                        //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\TW.PNG");
-                    }
-                    else if (positionY == 50 && (positionX == 50 || positionX == 400))
-                    {
-                        Figur BW = new Figur();
-                        FigurenL[x, y] = BW;
-                        FigurenL[x, y].Aktiv = true;
-                        FigurenL[x, y].Rolle = "Turm";
-                        FigurenL[x, y].Spieler = "schwarz";
-                        //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\TS.PNG");
-                    }
-                    #endregion
-
-                    #region Springer
-                    else if ((positionY == 50 && (positionX == 100 || positionX == 350)) || (positionY == 400 && (positionX == 100 || positionX == 350)))
-                    {
-                        Figur BW = new Figur();
-                        FigurenL[x, y] = BW;
-                        FigurenL[x, y].Aktiv = true;
-                        FigurenL[x, y].Rolle = "Springer";
-                        if (positionY == 50)
-                        {
-                            FigurenL[x, y].Spieler = "schwarz";
-                            //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\SS.PNG");
-                        }
-                        else
-                        {
-                            FigurenL[x, y].Spieler = "weiß";
-                            //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\SW.PNG");
-                        }
-                    }
-                    #endregion
-
-                    #region Läufer
-                    else if (positionY == 50 && (positionX == 150 || positionX == 300) || positionY == 400 && (positionX == 150 || positionX == 300))
-                    {
-                        Figur BW = new Figur();
-                        FigurenL[x, y] = BW;
-                        FigurenL[x, y].Aktiv = true;
-                        FigurenL[x, y].Rolle = "Läufer";
-                        if (positionY == 50)
-                        {
-                            FigurenL[x, y].Spieler = "schwarz";
-                            //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\LS.PNG");
-                        }
-                        else
-                        {
-                            FigurenL[x, y].Spieler = "weiß";
-                            //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\LW.PNG");
-                        }
-                    }
-                    #endregion
-
-                    #region König
-                    else if (positionY == 50 && positionX == 250 || positionY == 400 && positionX == 250)
-                    {
-                        Figur BW = new Figur();
-                        FigurenL[x, y] = BW;
-                        FigurenL[x, y].Aktiv = true;
-                        FigurenL[x, y].Rolle = "König";
-                        if (positionY == 50)
-                        {
-                            FigurenL[x, y].Spieler = "schwarz";
-                            //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\KÖS.PNG");
-                        }
-                        else
-                        {
-                            FigurenL[x, y].Spieler = "weiß";
-                            //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\KÖW.PNG");
-                        }
-                    }
-                    #endregion
-
-                    #region Königin
-                    else if (positionY == 50 && positionX == 200 || positionY == 400 && positionX == 200)
-                    {
-                        Figur BW = new Figur();
-                        FigurenL[x, y] = BW;
-                        FigurenL[x, y].Aktiv = true;
-                        FigurenL[x, y].Rolle = "Königin";
-                        if (positionY == 50)
-                        {
-                            FigurenL[x, y].Spieler = "schwarz";
-                            //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\KS.PNG");
-                        }
-                        else
-                        {
-                            //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\KW.PNG");
-                        }
-                    }
-                    #endregion
-
-                        
-                    positionX = positionX + 50;
-                }
-                positionX = 50;
-                positionY = positionY + 50;
-            }
-            #endregion
-        }
+        
                        
         private void InitializeFigures()
         {
@@ -184,192 +42,259 @@ namespace SchachTest
                     if (posY == 100)
                     {
                         pawnFigureClass pawnBlack = new pawnFigureClass();
-                        figurenArray[x, y] = pawnBlack;
-
+                        figureArray[x, y] = pawnBlack;
                         pawnBlack.side = false;
                         pawnBlack.active = true;
                         pawnBlack.positionX = x;
                         pawnBlack.positionY = y;
                         pawnBlack.role = "Pawn";
+
+                        figurepicturesArray[x, y] = new PictureBox();
+                        figurepicturesArray[x, y].Location = new Point(posX, posY);
+                        figurepicturesArray[x, y].Name = "Black Pawn" + x;
+                        figurepicturesArray[x, y].Size = new Size(50, 50);
+                        figurepicturesArray[x, y].Image = ProjektWochenSchach2017UltimateEdition.Properties.Resources.bS;
+                        figurepicturesArray[x, y].Click += new EventHandler(this.MoveFigure);
                     }
                     else if (posY == 350)
                     {
                         pawnFigureClass pawnWhite = new pawnFigureClass();
-                        figurenArray[x, y] = pawnWhite;
+                        figureArray[x, y] = pawnWhite;
+                        figureArray[x, y].side = true;
+                        figureArray[x, y].active = true;
+                        figureArray[x, y].positionX = x;
+                        figureArray[x, y].positionY = y;
+                        figureArray[x, y].role = "Pawn";
 
-                        figurenArray[x, y].side = true;
-                        figurenArray[x, y].active = true;
-                        figurenArray[x, y].positionX = x;
-                        figurenArray[x, y].positionY = y;
-                        figurenArray[x, y].role = "Pawn";
+                        figurepicturesArray[x, y] = new PictureBox();
+                        figurepicturesArray[x, y].Location = new Point(posX, posY);
+                        figurepicturesArray[x, y].Name = "Black Pawn" + x;
+                        figurepicturesArray[x, y].Size = new Size(50, 50);
+                        figurepicturesArray[x, y].Image = ProjektWochenSchach2017UltimateEdition.Properties.Resources.bw;
+                        figurepicturesArray[x, y].Click += new EventHandler(this.MoveFigure);
                     }
                     #endregion
                     #region Towers
                     else if (posY == 400 && (posX == 50 || posX == 400))
                     {
                         towerFigureClass towerBlack = new towerFigureClass();
-                        figurenArray[x, y] = towerBlack;
-                        figurenArray[x, y].side = false;
-                        figurenArray[x, y].active = true;
-                        figurenArray[x, y].positionX = x;
-                        figurenArray[x, y].positionY = y;
-                        figurenArray[x, y].role = "Tower"; 
-                        
+                        figureArray[x, y] = towerBlack;
+                        figureArray[x, y].side = false;
+                        figureArray[x, y].active = true;
+                        figureArray[x, y].positionX = x;
+                        figureArray[x, y].positionY = y;
+                        figureArray[x, y].role = "Tower";
+
+                        figurepicturesArray[x, y] = new PictureBox();
+                        figurepicturesArray[x, y].Location = new Point(posX, posY);
+                        figurepicturesArray[x, y].Name = "Black Tower" + x;
+                        figurepicturesArray[x, y].Size = new Size(50, 50);
+                        figurepicturesArray[x, y].Image = ProjektWochenSchach2017UltimateEdition.Properties.Resources.tw;
+                        figurepicturesArray[x, y].Click += new EventHandler(this.MoveFigure);
+
                     }
                     else if (posY == 50 && (posX == 50 || posX == 400))
                     {
                         towerFigureClass towerWhite = new towerFigureClass();
-                        figurenArray[x, y] = towerWhite;
-                        figurenArray[x, y].side = true;
-                        figurenArray[x, y].active = true;
-                        figurenArray[x, y].positionX = x;
-                        figurenArray[x, y].positionY = y;
-                        figurenArray[x, y].role = "Tower";
+                        figureArray[x, y] = towerWhite;
+                        figureArray[x, y].side = true;
+                        figureArray[x, y].active = true;
+                        figureArray[x, y].positionX = x;
+                        figureArray[x, y].positionY = y;
+                        figureArray[x, y].role = "Tower";
+
+                        figurepicturesArray[x, y] = new PictureBox();
+                        figurepicturesArray[x, y].Location = new Point(posX, posY);
+                        figurepicturesArray[x, y].Name = "White Tower" + x;
+                        figurepicturesArray[x, y].Size = new Size(50, 50);
+                        figurepicturesArray[x, y].Image = ProjektWochenSchach2017UltimateEdition.Properties.Resources.ts;
+                        figurepicturesArray[x, y].Click += new EventHandler(this.MoveFigure);
                     }
                     #endregion
                     #region Bishops
                     else if ((posY == 50 && (posX == 100 || posX == 350)) || (posY == 400 && (posX == 100 || posX == 350)))
                     {
                         bishopFigureClass bishop = new bishopFigureClass();
-                        figurenArray[x, y] = bishop;
-                        figurenArray[x, y].active = true;
-                        figurenArray[x, y].positionX = x;
-                        figurenArray[x, y].positionY = y;
-                        figurenArray[x, y].role = "Bishop";
+                        figureArray[x, y] = bishop;
+                        figureArray[x, y].active = true;
+                        figureArray[x, y].positionX = x;
+                        figureArray[x, y].positionY = y;
+                        figureArray[x, y].role = "Bishop";
 
                         if (posY == 50)
                         {
-                            figurenArray[x, y].side = false;
-                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\SS.PNG");
+                            figureArray[x, y].side = false;
+
+                            figurepicturesArray[x, y] = new PictureBox();
+                            figurepicturesArray[x, y].Location = new Point(posX, posY);
+                            figurepicturesArray[x, y].Name = "Black Bishop" + x;
+                            figurepicturesArray[x, y].Size = new Size(50, 50);
+                            figurepicturesArray[x, y].Image = ProjektWochenSchach2017UltimateEdition.Properties.Resources.ls;
+                            figurepicturesArray[x, y].Click += new EventHandler(this.MoveFigure);
                         }
                         else
                         {
-                            figurenArray[x, y].side = true;
-                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\SW.PNG");
+                            figureArray[x, y].side = true;
+
+                            figurepicturesArray[x, y] = new PictureBox();
+                            figurepicturesArray[x, y].Location = new Point(posX, posY);
+                            figurepicturesArray[x, y].Name = "White Bishop" + x;
+                            figurepicturesArray[x, y].Size = new Size(50, 50);
+                            figurepicturesArray[x, y].Image = ProjektWochenSchach2017UltimateEdition.Properties.Resources.lw;
+                            figurepicturesArray[x, y].Click += new EventHandler(this.MoveFigure);
+                            //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\SW.PNG");
                         }
-                        #endregion
+                        
+                        
                     }
+                    #endregion
+                    #region Kings
+                    else if (posY == 50 && posX == 250 || posY == 400 && posX == 250)
+                    {
+                        figureArray[x, y] = new kingFigureClass();
+                        figureArray[x, y].active = true;
+                        figureArray[x, y].role = "King";
+                        figureArray[x, y].positionX = x;
+                        figureArray[x, y].positionY = y;
+                        if (posY == 50)
+                        {
+                            figureArray[x, y].side = false;
+
+                            figurepicturesArray[x, y] = new PictureBox();
+                            figurepicturesArray[x, y].Location = new Point(posX, posY);
+                            figurepicturesArray[x, y].Name = "Black King";
+                            figurepicturesArray[x, y].Size = new Size(50, 50);
+                            figurepicturesArray[x, y].Image = ProjektWochenSchach2017UltimateEdition.Properties.Resources.kS;
+                            figurepicturesArray[x, y].Click += new EventHandler(this.MoveFigure);
+                            //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\KÖS.PNG");
+                        }
+                        else
+                        {
+                            figureArray[x, y].side = true;
+
+                            figurepicturesArray[x, y] = new PictureBox();
+                            figurepicturesArray[x, y].Location = new Point(posX, posY);
+                            figurepicturesArray[x, y].Name = "White King";
+                            figurepicturesArray[x, y].Size = new Size(50, 50);
+                            figurepicturesArray[x, y].Image = ProjektWochenSchach2017UltimateEdition.Properties.Resources.kw;
+                            figurepicturesArray[x, y].Click += new EventHandler(this.MoveFigure);
+                            //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\KÖW.PNG");
+                        }
+                    }
+                    #endregion
+                    #region Queens
+                    else if (posY == 50 && posX == 200 || posY == 400 && posX == 200)
+                    {
+                        figureArray[x, y] = new queenFigureClass();
+                        figureArray[x, y].active = true;
+                        figureArray[x, y].positionX = x;
+                        figureArray[x, y].positionY = y;
+                        figureArray[x, y].role = "Queen";
+                        if (posY == 50)
+                        {
+                            figureArray[x, y].side = false;
+
+                            figurepicturesArray[x, y] = new PictureBox();
+                            figurepicturesArray[x, y].Location = new Point(posX, posY);
+                            figurepicturesArray[x, y].Name = "Black Queen";
+                            figurepicturesArray[x, y].Size = new Size(50, 50);
+                            figurepicturesArray[x, y].Image = ProjektWochenSchach2017UltimateEdition.Properties.Resources.ds;
+                            figurepicturesArray[x, y].Click += new EventHandler(this.MoveFigure);
+                            //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\KS.PNG");
+                        }
+                        else
+                        {
+                            figureArray[x, y].side = true;
+
+                            figurepicturesArray[x, y] = new PictureBox();
+                            figurepicturesArray[x, y].Location = new Point(posX, posY);
+                            figurepicturesArray[x, y].Name = "White Queen";
+                            figurepicturesArray[x, y].Size = new Size(50, 50);
+                            figurepicturesArray[x, y].Image = ProjektWochenSchach2017UltimateEdition.Properties.Resources.dw;
+                            figurepicturesArray[x, y].Click += new EventHandler(this.MoveFigure);
+                            //PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\KW.PNG");
+                        }
+                    }
+                    #endregion
+
+                    Controls.Add(figurepicturesArray[x, y]);
+                    posX += 50;
                 }
+                posX = 50;
+                posY += 50;
             }
         }
 
-        private void PbxErstellen()
+        private void InitializeChessboard()
         {
-            int positionX = 50;
-            int positionY = 50;            
+            int posX = 50;
+            int posY = 50;
+
+            int posXLabels = 70;
+            string[] labelLetters = new string[] { "A", "B", "C","D", "E", "F","G","H" };
+            for (int i = 0; i < 8; i++)
+            {
+                Label label = new Label();
+                label.AutoSize = true;
+                label.Location = new Point(posXLabels, 35);
+                label.Size = new Size(20, 13);
+                label.Text = labelLetters[i];
+                Controls.Add(label);
+                posXLabels += 50;
+            }
+
+            int posYLabels = 70;
+            string[] labelNumbers = new string[] { "1", "2", "3", "4", "5", "6", "7", "8" };
+            for (int i = 0; i < 8; i++)
+            {
+                Label label = new Label();
+                label.AutoSize = true;
+                label.Location = new Point(35, posYLabels);
+                label.Size = new Size(20, 13);
+                label.Text = labelNumbers[(labelNumbers.Length - 1) - i];
+                Controls.Add(label);
+                posYLabels += 50;
+            }
+
+
             for (int y = 0; y < 8; y++)
             {
                 for (int x = 0; x < 8; x++)
                 {
                     PictureBox pb = new PictureBox();
-                    PictureL[x, y] = pb;                    
-                    if (positionY % 100 == 0 && positionX % 100 == 0 || positionY % 100 == 50 && positionX % 100 == 50)
+                    chessboardArray[x, y] = pb;                    
+                    if (posY % 100 == 0 && posX % 100 == 0 || posY % 100 == 50 && posX % 100 == 50)
                     {
-                        pb.BackColor = Color.Gray;                        
+                        pb.BackColor = Color.White;                        
                     }
                     else
                     {                        
-                        pb.BackColor = Color.White;                        
+                        pb.BackColor = Color.Gray;                        
                     }                    
-                    pb.Location = new System.Drawing.Point(positionX, positionY);
-                    pb.Size = new System.Drawing.Size(50, 50);
-                    pb.TabIndex = 49;
-                    pb.TabStop = false;
-                    pb.Click += new System.EventHandler(TurmBewegen);
-                    positionX = positionX + 50;
+                    pb.Location = new Point(posX, posY);
+                    pb.Size = new Size(50, 50);
+                    posX = posX + 50;
                     pb.BorderStyle = BorderStyle.FixedSingle;
                     Controls.Add(pb);
 
                 }
-                positionX = 50;
-                positionY = positionY + 50;
+                posX = 50;
+                posY = posY + 50;
             }
         }
         
-        public void FigurenZuweisen(List<Figur> Figuren)
-        {
-            string[] Buchstaben = new string[]{"A", "B", "C", "D", "E", "F", "G", "H"};
-            string[] Zahlen = new string[] {"1", "2", "3", "4", "5", "6", "7", "8"};
-            for (int i = 0; i < 16; i++)
-            {
-                if (i >= 0 && i < 16)
-                {
-                    Figuren[i].Aktiv = true;
-                    Figuren[i].Spieler = "weiß";
-                    Figuren[i].Rolle = "Bauer";
-                    //Figuren[i].PositionX = Buchstaben[i];
-                    //Figuren[i].PositionY = Zahlen[1];
-                }
-                else
-                {
-                    Figuren[i].Aktiv = true;
-                    Figuren[i].Spieler = "schwarz";
-                    Figuren[i].Rolle = "Bauer";
-                    //Figuren[i].PositionX = Buchstaben[i/2];
-                    //Figuren[i].PositionY = Zahlen[6];
-                }
-            }
-        }
-
         private void FrmSchach_Load(object sender, EventArgs e)
         {
-
+            InitializeFigures();
+            InitializeChessboard();
+            
         }
 
-        private void TurmBewegen(object sender, EventArgs e)
+        private void MoveFigure(object sender, EventArgs e)
         {
-            
-        }       
+          
+        }
+
         
-        private bool BewegungOK(Figur F, int PositionXAlt , int PositionYAlt, int PositionXNeu , int PositionYNeu)
-        {
-            bool ok = true;
-            string gegner = "schwarz";
-            if (F.Spieler != "weiß")
-	        {
-		        gegner = "weiß";
-	        }
-            if (F.Rolle == "Turm")
-            {
-                if (PositionXAlt != PositionXNeu && PositionYAlt != PositionYNeu)
-                {
-                    ok = false;
-                }
-                else if (PositionXAlt != PositionXNeu && PositionYAlt == PositionYNeu)
-                {
-                    if (PositionXAlt > PositionXNeu)
-                    {
-                        for (int i = PositionXAlt; i > (PositionXNeu); i--)
-                        {
-                            if (FigurenL[PositionXAlt,PositionYAlt].Spieler == FigurenL[i, PositionYNeu].Spieler)
-                            {
-                                ok = false;
-                            }
-                            else if (FigurenL[i - 1, PositionYNeu].Spieler == gegner)
-                            {
-                                ok = false;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        for (int i = 0; i < 8 - PositionXAlt; i++)
-                        {
-
-                        }
-                    }
-                }
-                else if (PositionXAlt == PositionXNeu && PositionYAlt != PositionYNeu)
-                {
-                    
-                }
-            }
-            return ok;
-        }
-
-        private void FrmSchach_Load_1(object sender, EventArgs e)
-        {
-            
-        }
     }
 }
