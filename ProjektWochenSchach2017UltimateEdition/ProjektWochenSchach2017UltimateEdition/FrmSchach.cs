@@ -49,7 +49,7 @@ namespace SchachTest
                         FigurenL[x, y].Aktiv = true;
                         FigurenL[x, y].Rolle = "Bauer";
                         FigurenL[x, y].Spieler = "schwarz";
-                        PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\BS.PNG");
+                        PictureL[x, y].BackgroundImage = Image.FromFile(@"..\..\..\figuren\bs.PNG");
                     }
                     else if (positionY == 350)
                     {
@@ -58,7 +58,7 @@ namespace SchachTest
                         FigurenL[x, y].Aktiv = true;
                         FigurenL[x, y].Rolle = "Bauer";
                         FigurenL[x, y].Spieler = "weiß";
-                        PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\BW.PNG");
+                        PictureL[x, y].BackgroundImage = Image.FromFile(@"..\..\..\figuren\bw.PNG");
                     }
                     #endregion
 
@@ -70,7 +70,7 @@ namespace SchachTest
                         FigurenL[x, y].Aktiv = true;
                         FigurenL[x, y].Rolle = "Turm";
                         FigurenL[x, y].Spieler = "weiß";
-                        PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\TW.PNG");
+                        PictureL[x, y].BackgroundImage = Image.FromFile(@"..\..\..\figuren\tw.PNG");
                     }
                     else if (positionY == 50 && (positionX == 50 || positionX == 400))
                     {
@@ -79,7 +79,7 @@ namespace SchachTest
                         FigurenL[x, y].Aktiv = true;
                         FigurenL[x, y].Rolle = "Turm";
                         FigurenL[x, y].Spieler = "schwarz";
-                        PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\TS.PNG");
+                        PictureL[x, y].BackgroundImage = Image.FromFile(@"..\..\..\figuren\ts.PNG");
                     }
                     #endregion
 
@@ -93,12 +93,12 @@ namespace SchachTest
                         if (positionY == 50)
                         {
                             FigurenL[x, y].Spieler = "schwarz";
-                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\SS.PNG");
+                            PictureL[x, y].BackgroundImage = Image.FromFile(@"..\..\..\figuren\ss.PNG");
                         }
                         else
                         {
                             FigurenL[x, y].Spieler = "weiß";
-                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\SW.PNG");
+                            PictureL[x, y].BackgroundImage = Image.FromFile(@"..\..\..\figuren\sw.PNG");
                         }
                     }
                     #endregion
@@ -113,12 +113,12 @@ namespace SchachTest
                         if (positionY == 50)
                         {
                             FigurenL[x, y].Spieler = "schwarz";
-                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\LS.PNG");
+                            PictureL[x, y].BackgroundImage = Image.FromFile(@"..\..\..\figuren\ls.PNG");
                         }
                         else
                         {
                             FigurenL[x, y].Spieler = "weiß";
-                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\LW.PNG");
+                            PictureL[x, y].BackgroundImage = Image.FromFile(@"..\..\..\figuren\lw.PNG");
                         }
                     }
                     #endregion
@@ -133,34 +133,34 @@ namespace SchachTest
                         if (positionY == 50)
                         {
                             FigurenL[x, y].Spieler = "schwarz";
-                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\KÖS.PNG");
+                            PictureL[x, y].BackgroundImage = Image.FromFile(@"..\..\..\figuren\ks.PNG");
                         }
                         else
                         {
                             FigurenL[x, y].Spieler = "weiß";
-                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\KÖW.PNG");
+                            PictureL[x, y].BackgroundImage = Image.FromFile(@"..\..\..\figuren\kw.PNG");
                         }
                     }
                     #endregion
 
-                    #region Königin
+                    #region Dame
                     else if (positionY == 50 && positionX == 200 || positionY == 400 && positionX == 200)
                     {
                         Figur BW = new Figur();
                         FigurenL[x, y] = BW;
                         FigurenL[x, y].Aktiv = true;
-                        FigurenL[x, y].Rolle = "Königin";
+                        FigurenL[x, y].Rolle = "Dame";
                         if (positionY == 50)
                         {
                             FigurenL[x, y].Spieler = "schwarz";
-                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\KS.PNG");
+                            //System.IO.Directory.GetCurrentDirectory()
+                            PictureL[x, y].BackgroundImage = Image.FromFile(@"..\..\..\figuren\ds.PNG");
                         }
                         else
                         {
-                            PictureL[x, y].BackgroundImage = Image.FromFile(@"C:\Users\iaf53troeger\Desktop\KW.PNG");
+                            PictureL[x, y].BackgroundImage = Image.FromFile(@"..\..\..\figuren\dw.PNG");
                         }
                     #endregion
-
                         
                     }
                     positionX = positionX + 50;
@@ -193,7 +193,7 @@ namespace SchachTest
                     pb.Size = new System.Drawing.Size(50, 50);
                     pb.TabIndex = 49;
                     pb.TabStop = false;
-                    pb.Click += new System.EventHandler(TurmBewegen);
+                    pb.Click += new System.EventHandler(FigurBewegen);
                     positionX = positionX + 50;
                     pb.BorderStyle = BorderStyle.FixedSingle;
                     Controls.Add(pb);
@@ -202,41 +202,30 @@ namespace SchachTest
                 positionX = 50;
                 positionY = positionY + 50;
             }
-        }
+        }        
         
-        public void FigurenZuweisen(List<Figur> Figuren)
-        {
-            string[] Buchstaben = new string[]{"A", "B", "C", "D", "E", "F", "G", "H"};
-            string[] Zahlen = new string[] {"1", "2", "3", "4", "5", "6", "7", "8"};
-            for (int i = 0; i < 16; i++)
-            {
-                if (i >= 0 && i < 16)
-                {
-                    Figuren[i].Aktiv = true;
-                    Figuren[i].Spieler = "weiß";
-                    Figuren[i].Rolle = "Bauer";
-                    //Figuren[i].PositionX = Buchstaben[i];
-                    //Figuren[i].PositionY = Zahlen[1];
-                }
-                else
-                {
-                    Figuren[i].Aktiv = true;
-                    Figuren[i].Spieler = "schwarz";
-                    Figuren[i].Rolle = "Bauer";
-                    //Figuren[i].PositionX = Buchstaben[i/2];
-                    //Figuren[i].PositionY = Zahlen[6];
-                }
-            }
-        }
-
         private void FrmSchach_Load(object sender, EventArgs e)
         {
 
         }
 
-        private void TurmBewegen(object sender, EventArgs e)
+        private void FigurBewegen(object sender, EventArgs e)
         {
-            
+            int MouseX = Convert.ToInt32(this.PointToClient(Cursor.Position).X);
+            int MouseY = Convert.ToInt32(this.PointToClient(Cursor.Position).Y);
+            for (int y = 0; y < 8; y++)
+            {
+                for (int x = 0; x < 8; x++)
+                {                    
+                    if (MouseX >= PictureL[x,y].Location.X && MouseX < (PictureL[x,y].Location.X + 50))
+                    {
+                        if (MouseY >= PictureL[x, y].Location.Y && MouseY < (PictureL[x, y].Location.Y + 50))
+                        {
+                            PictureL[x, y + 2].BackgroundImage = Image.FromFile(@"..\..\..\figuren\tw.PNG");
+                        }
+                    }                                                       
+                }
+            }            
         }       
         
         private bool BewegungOK(Figur F, int PositionXAlt , int PositionYAlt, int PositionXNeu , int PositionYNeu)
@@ -246,24 +235,29 @@ namespace SchachTest
             if (F.Spieler != "weiß")
 	        {
 		        gegner = "weiß";
-	        }
+            }
+            #region Turm
             if (F.Rolle == "Turm")
             {
+                // nicht X und Y Achse gleichzeitig
                 if (PositionXAlt != PositionXNeu && PositionYAlt != PositionYNeu)
                 {
                     ok = false;
                 }
+                // Bewegung auf X-Achse
                 else if (PositionXAlt != PositionXNeu && PositionYAlt == PositionYNeu)
                 {
                     if (PositionXAlt > PositionXNeu)
                     {
-                        for (int i = PositionXAlt; i > (PositionXNeu); i--)
+                        for (int x = PositionXAlt; x > (PositionXNeu); x--)
                         {
-                            if (FigurenL[PositionXAlt,PositionYAlt].Spieler == FigurenL[i, PositionYNeu].Spieler)
+                            // Keine eigenen Figuren angreifen/überspringen
+                            if (FigurenL[PositionXAlt,PositionYAlt].Spieler == FigurenL[x, PositionYNeu].Spieler)
                             {
                                 ok = false;
                             }
-                            else if (FigurenL[i - 1, PositionYNeu].Spieler == gegner)
+                            // Keine Gegner überspringen
+                            else if (FigurenL[x + 1, PositionYNeu].Spieler == gegner)
                             {
                                 ok = false;
                             }
@@ -271,16 +265,58 @@ namespace SchachTest
                     }
                     else
                     {
-                        for (int i = 0; i < 8 - PositionXAlt; i++)
+                        for (int x = PositionXAlt; x > (PositionXNeu); x++)
                         {
-
+                            // Keine eigenen Figuren angreifen/überspringen
+                            if (FigurenL[PositionXAlt, PositionYAlt].Spieler == FigurenL[x, PositionYNeu].Spieler)
+                            {
+                                ok = false;
+                            }
+                            // Keine Gegner überspringen
+                            else if (FigurenL[x - 1, PositionYNeu].Spieler == gegner)
+                            {
+                                ok = false;
+                            }
                         }
                     }
                 }
+                // Bewegung Y-Achse
                 else if (PositionXAlt == PositionXNeu && PositionYAlt != PositionYNeu)
                 {
-                    
+                    if (PositionYAlt > PositionYNeu)
+                    {
+                        for (int y = PositionXAlt; y > (PositionXNeu); y--)
+                        {
+                            // Keine eigenen Figuren angreifen/überspringen
+                            if (FigurenL[PositionXAlt, PositionYAlt].Spieler == FigurenL[PositionXNeu, y].Spieler)
+                            {
+                                ok = false;
+                            }
+                            // Keine Gegner überspringen
+                            else if (FigurenL[y + 1, PositionYNeu].Spieler == gegner)
+                            {
+                                ok = false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (int y = PositionXAlt; y > (PositionXNeu); y++)
+                        {
+                            // Keine eigenen Figuren angreifen/überspringen
+                            if (FigurenL[PositionXAlt, PositionYAlt].Spieler == FigurenL[PositionXNeu, y].Spieler)
+                            {
+                                ok = false;
+                            }
+                            // Keine Gegner überspringen
+                            else if (FigurenL[y - 1, PositionYNeu].Spieler == gegner)
+                            {
+                                ok = false;
+                            }
+                        }
+                    }
                 }
+            #endregion
             }
             return ok;
         }
