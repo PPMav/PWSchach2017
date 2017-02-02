@@ -28,6 +28,7 @@ namespace SchachTest
         string[,] OriginalFarbe = new string[8,8];
         bool[,] Möglich = new bool[8, 8];
         string AktiverSpieler = "weiß";
+        bool SchachBool;
         #endregion
 
         public FrmSchach()
@@ -306,15 +307,25 @@ namespace SchachTest
                                             FigurenL[AuswahlArrayX, AuswahlArrayY] = new Figur();
                                             FigurenL[AuswahlArrayX, AuswahlArrayY].Rolle = "none";
                                             PictureL[AuswahlArrayX, AuswahlArrayY].BackgroundImage = null;
+                                            //SchachBool = Schach();
+                                            
                                             if (AktiverSpieler == "weiß")
                                             {
                                                 AktiverSpieler = "schwarz";
                                                 lblSpieler.Text = "Schwarz";
+                                                if (SchachBool == true)
+                                                {
+                                                    MessageBox.Show("Spieler" + AktiverSpieler + "steht im Schach");
+                                                }
                                             }
                                             else
                                             {
                                                 AktiverSpieler = "weiß";
                                                 lblSpieler.Text = "Weiß";
+                                                if (SchachBool == true)
+                                                {
+                                                    MessageBox.Show("Spieler" + AktiverSpieler + "steht im Schach");
+                                                }
                                             }                                            
                                         }                                        
                                     } 
@@ -460,6 +471,7 @@ namespace SchachTest
 
                     break;
 
+                #region Dame
                 case "Dame":
                     if (xAlt == xNeu)
                     {
@@ -555,6 +567,7 @@ namespace SchachTest
                     }
 
                     break;
+                #endregion
 
                 case "König":
                     ok = true;
@@ -582,8 +595,9 @@ namespace SchachTest
                         {
                             xKönig = x;
                             yKönig = y;
+                            //MessageBox.Show(xKönig + " , " + yKönig);
                         }
-                        else
+                        else if (AktiverSpieler == "schwarz" && FigurenL[x, y].Spieler == "weiß")
                         {
                             xKönig = x;
                             yKönig = y;
@@ -598,18 +612,14 @@ namespace SchachTest
                 {
                     if (FigurenL[x,y].Spieler == AktiverSpieler)
                     {
-                        try
-                        {
-                            schach = BewegungOK(FigurenL[x, y], x, y, xKönig, yKönig);
+                       
+                            schach = BewegungOK(FigurenL[x, y], x, y, xKönig, yKönig);                            
                             if (schach == true)
                             {
+                                //MessageBox.Show(FigurenL[x, y].Rolle + FigurenL[x, y].Spieler + x + y + xKönig + yKönig);
                                 return true;
                             }
-                        }
-                        catch (Exception)
-                        {
-                            schach = false;
-                        }
+                        
                     }
                 }
             }
@@ -622,38 +632,53 @@ namespace SchachTest
             bool ok = true;
 
             #region Logik
-            switch (FigurenL[AuswahlArrayX, AuswahlArrayY].Rolle)
+            switch (F.Rolle)//FigurenL[AuswahlArrayX, AuswahlArrayY].Rolle)
             {
+                #region Bauer
                 case "Bauer":
                     ok = Verwaltung.PawnMovement(AuswahlArrayX, AuswahlArrayY, x, y, FigurenL[AuswahlArrayX, AuswahlArrayY].Spieler);
+                    
                     if (ok == true)
                     {
                         ok = FigurDazwischen(F, PositionXAlt, PositionYAlt, x, y);
-                    }
+                    }                    
                     if (FigurenL[AuswahlArrayX, AuswahlArrayY].Spieler == "weiß")
                     {
-                        if (FigurenL[AuswahlArrayX + 1, AuswahlArrayY - 1] == FigurenL[x, y] || FigurenL[AuswahlArrayX - 1, AuswahlArrayY -1] == FigurenL[x, y])
+                        try
                         {
-                            if (FigurenL[x, y].Spieler == "schwarz")
+                            if (FigurenL[AuswahlArrayX + 1, AuswahlArrayY - 1] == FigurenL[x, y] || FigurenL[AuswahlArrayX - 1, AuswahlArrayY - 1] == FigurenL[x, y])
                             {
-                                ok = true;
-                            }                            
-                        } 
+                                if (FigurenL[x, y].Spieler == "schwarz")
+                                {
+                                    ok = true;
+                                }
+                            } 
+                        }
+                        catch (Exception)
+                        {                          
+                            
+                        }                        
                     }
                     else
                     {
-                        if (FigurenL[AuswahlArrayX + 1, AuswahlArrayY + 1] == FigurenL[x, y] || FigurenL[AuswahlArrayX - 1, AuswahlArrayY + 1] == FigurenL[x, y])
+                        try
                         {
-                            if (FigurenL[x, y].Spieler == "weiß")
+                            if (FigurenL[AuswahlArrayX + 1, AuswahlArrayY + 1] == FigurenL[x, y] || FigurenL[AuswahlArrayX - 1, AuswahlArrayY + 1] == FigurenL[x, y])
                             {
-                                ok = true;
-                            }
-                        } 
-                    }
-                    
-                    
+                                if (FigurenL[x, y].Spieler == "weiß")
+                                {
+                                    ok = true;
+                                }
+                            } 
+                        }
+                        catch (Exception)
+                        {                            
+                           
+                        }                        
+                    }  
 
                     break;
+                #endregion
 
                 case "Turm":
                     ok = Verwaltung.Movement(AuswahlArrayX, AuswahlArrayY, x, y);
