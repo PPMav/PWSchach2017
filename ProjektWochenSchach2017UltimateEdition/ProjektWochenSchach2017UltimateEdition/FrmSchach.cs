@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ProjektWochenSchach2017UltimateEdition;
 
 namespace SchachTest
 {
@@ -15,8 +16,8 @@ namespace SchachTest
         #region Var
         bool Start = true;
         bool ErsterZug = true;
-        public List<Figur> Figuren = new List<Figur>();
-        List<PictureBox> Pbx = new List<PictureBox>();
+        //public List<Figur> Figuren = new List<Figur>();
+        //List<PictureBox> Pbx = new List<PictureBox>();
         Figur[,] FigurenL = new Figur[8, 8];
         PictureBox[,] PictureL = new PictureBox[8, 8];        
         int MouseXAlt;
@@ -25,6 +26,8 @@ namespace SchachTest
         int AuswahlArrayY;
         bool Auswahl = true;
         string[,] OriginalFarbe = new string[8,8];
+        bool[,] Möglich = new bool[8, 8];
+        string AktiverSpieler = "weiß";
         #endregion
 
         public FrmSchach()
@@ -165,6 +168,7 @@ namespace SchachTest
                         }
                         else
                         {
+                            FigurenL[x, y].Spieler = "weiß";
                             PictureL[x, y].BackgroundImage = Image.FromFile(@"..\..\..\figuren\dw.PNG");
                         }
                     }
@@ -181,6 +185,7 @@ namespace SchachTest
                 positionY = positionY + 50;
             }
             #endregion
+            ErsterZug = false;
         }
                        
         private void PbxErstellen()
@@ -221,9 +226,7 @@ namespace SchachTest
         private void FrmSchach_Load(object sender, EventArgs e)
         {
 
-        }
-
-        //private void ZugMöglich()
+        }        
 
         private void FigurBewegen(object sender, EventArgs e)
         {
@@ -277,50 +280,43 @@ namespace SchachTest
                         {
                             if (MouseY >= PictureL[x, y].Location.Y && MouseY < (PictureL[x, y].Location.Y + 50))
                             {
-                                #region Logik
-                                switch (FigurenL[AuswahlArrayX, AuswahlArrayY].Rolle)
+                                try
                                 {
-                                    case "Bauer":
-                                        ok = true;
-
-                                        break;
-
-                                    case "Turm":
-                                        ok = BewegungOK(FigurenL[AuswahlArrayX,AuswahlArrayY], AuswahlArrayX, AuswahlArrayY, x, y);
-
-                                        break;
-
-                                    case "Läufer":
-                                        ok = true;
-
-                                        break;
-
-                                    case "Springer":
-                                        ok = false;
-
-                                        break;
-
-                                    case "Dame":
-                                        ok = true;
-
-                                        break;
-
-                                    case "König":
-                                        ok = true;
-
-                                        break;
-
-                                    default:
-                                        break;
+                                    ok = BewegungOK(FigurenL[AuswahlArrayX, AuswahlArrayY], AuswahlArrayX, AuswahlArrayY, x, y);
                                 }
-                                #endregion
+                                catch (Exception)
+                                {
+                                    ok = false;
+                                }
+
+                                if (FigurenL[AuswahlArrayX, AuswahlArrayY].Spieler != AktiverSpieler)
+                                {
+                                    ok = false;
+                                }
 
                                 if (ok == true)
                                 {
                                     if (PictureL[x, y] != PictureL[AuswahlArrayX, AuswahlArrayY])
                                     {
-                                        PictureL[x, y].BackgroundImage = PictureL[AuswahlArrayX, AuswahlArrayY].BackgroundImage;
-                                        PictureL[AuswahlArrayX, AuswahlArrayY].BackgroundImage = null;
+                                        if (FigurenL[x, y].Spieler != FigurenL[AuswahlArrayX, AuswahlArrayY].Spieler)
+                                        {                                            
+                                            PictureL[x, y].BackgroundImage = PictureL[AuswahlArrayX, AuswahlArrayY].BackgroundImage;
+                                            FigurenL[x, y] = FigurenL[AuswahlArrayX, AuswahlArrayY];
+                                            FigurenL[AuswahlArrayX, AuswahlArrayY] = null;
+                                            FigurenL[AuswahlArrayX, AuswahlArrayY] = new Figur();
+                                            FigurenL[AuswahlArrayX, AuswahlArrayY].Rolle = "none";
+                                            PictureL[AuswahlArrayX, AuswahlArrayY].BackgroundImage = null;
+                                            if (AktiverSpieler == "weiß")
+                                            {
+                                                AktiverSpieler = "schwarz";
+                                                lblSpieler.Text = "Schwarz";
+                                            }
+                                            else
+                                            {
+                                                AktiverSpieler = "weiß";
+                                                lblSpieler.Text = "Weiß";
+                                            }                                            
+                                        }                                        
                                     } 
                                 }                                                               
                             }
@@ -331,97 +327,377 @@ namespace SchachTest
             #endregion
         }       
         
-        private bool BewegungOK(Figur F, int PositionXAlt , int PositionYAlt, int PositionXNeu , int PositionYNeu)
+        private bool FigurDazwischen(Figur F, int xAlt , int yAlt, int xNeu , int yNeu)
         {
             bool ok = true;
-            string gegner = "schwarz";
-            if (F.Spieler != "weiß")
-	        {
-		        gegner = "weiß";
-            }
-            #region Turm
-            if (F.Rolle == "Turm")
+            switch (F.Rolle)
             {
-                // nicht X und Y Achse gleichzeitig
-                if (PositionXAlt != PositionXNeu && PositionYAlt != PositionYNeu)
-                {
-                    ok = false;
-                }
-                // Bewegung auf X-Achse
-                else if (PositionXAlt != PositionXNeu && PositionYAlt == PositionYNeu)
-                {
-                    if (PositionXAlt > PositionXNeu)
+                #region Bauer
+                case "Bauer":
+                    if (FigurenL[xNeu, yNeu].Spieler != null)
                     {
-                        for (int x = PositionXAlt; x > (PositionXNeu); x--)
-                        {
-                            // Keine eigenen Figuren angreifen/überspringen
-                            if (FigurenL[PositionXAlt,PositionYAlt].Spieler == FigurenL[x, PositionYNeu].Spieler)
+                        ok = false;
+                    }
+                    else if (F.Spieler == "weiß" && yAlt == 6 && yNeu == 4 && FigurenL[xNeu, (yAlt - 1)].Spieler != null)
+                    {
+                        ok = false;
+                    }
+                    else if (F.Spieler == "schwarz" && yAlt == 1 && yNeu == 3 && FigurenL[xNeu, (yAlt + 1)].Spieler != null)
+                    {
+                        ok = false;
+                    }                    
+
+                    break;
+                #endregion
+
+                #region Turm
+                case "Turm":
+                    if (xAlt == xNeu)
+                    {
+                        if (yAlt > yNeu)
+	                    {
+		                    for (int y = yAlt - 1; y > yNeu; y--)
                             {
-                                ok = false;
+                                if (FigurenL[xAlt, y].Spieler != null)
+                                {
+                                    ok = false;
+                                }
+	
                             }
-                            // Keine Gegner überspringen
-                            else if (FigurenL[x + 1, PositionYNeu].Spieler == gegner)
+	                    }
+                        else
+	                    {
+                            for (int y = yAlt + 1; y < yNeu; y++)
                             {
-                                ok = false;
+                                if (FigurenL[xAlt, y].Spieler != null)
+                                {
+                                    ok = false;
+                                }
                             }
-                        }
+	                    }
+                        
                     }
                     else
                     {
-                        for (int x = PositionXAlt; x > (PositionXNeu); x++)
+                        if (xAlt > xNeu)
                         {
-                            // Keine eigenen Figuren angreifen/überspringen
-                            if (FigurenL[PositionXAlt, PositionYAlt].Spieler == FigurenL[x, PositionYNeu].Spieler)
+                            for (int x = xAlt - 1; x > xNeu; x--)
                             {
-                                ok = false;
-                            }
-                            // Keine Gegner überspringen
-                            else if (FigurenL[x - 1, PositionYNeu].Spieler == gegner)
-                            {
-                                ok = false;
+                                if (FigurenL[x, yAlt].Spieler != null)
+                                {
+                                    ok = false;
+                                }
+
                             }
                         }
-                    }
-                }
-                // Bewegung Y-Achse
-                else if (PositionXAlt == PositionXNeu && PositionYAlt != PositionYNeu)
-                {
-                    if (PositionYAlt > PositionYNeu)
+                        else
+                        {
+                            for (int x = xAlt + 1; x < xNeu; x++)
+                            {
+                                if (FigurenL[x, yAlt].Spieler != null)
+                                {
+                                    ok = false;
+                                }
+                            }
+                        }
+                    }                    
+
+                    break;
+                #endregion
+
+                #region Läufer
+                case "Läufer":
+                    //unten rechts (geht)
+                    if (xAlt < xNeu && yAlt < yNeu)
                     {
-                        for (int y = PositionXAlt; y < (PositionXNeu); y--)
+                        for (int i = xAlt + 1; i < xNeu; i++)
                         {
-                            // Keine eigenen Figuren angreifen/überspringen
-                            if (FigurenL[PositionXAlt, PositionYAlt].Spieler == FigurenL[PositionXNeu, y].Spieler)
-                            {
-                                ok = false;
-                            }
-                            // Keine Gegner überspringen
-                            else if (FigurenL[y + 1, PositionYNeu].Spieler == gegner)
+                            if (FigurenL[i, (i + yAlt) - xAlt].Spieler != null)
                             {
                                 ok = false;
                             }
                         }
                     }
-                    else
+                    // oben links (geht)
+                    if (xAlt > xNeu && yAlt > yNeu)
                     {
-                        for (int y = PositionXAlt; y > (PositionXNeu); y++)
+                        for (int i = xAlt - 1; i > xNeu; i--)
                         {
-                            // Keine eigenen Figuren angreifen/überspringen
-                            if (FigurenL[PositionXAlt, PositionYAlt].Spieler == FigurenL[PositionXNeu, y].Spieler)
-                            {
-                                ok = false;
-                            }
-                            // Keine Gegner überspringen
-                            else if (FigurenL[y - 1, PositionYNeu].Spieler == gegner)
+                            if (FigurenL[i, yAlt - (xAlt - i)].Spieler != null)
                             {
                                 ok = false;
                             }
                         }
                     }
-                }
-            #endregion
+                    // oben rechts (geht)
+                    if (xAlt < xNeu && yAlt > yNeu)
+                    {
+                        for (int i = xAlt + 1; i < xNeu; i++)
+                        {
+                            if (FigurenL[i, yAlt - (i - xAlt)].Spieler != null)
+                            {
+                                ok = false;
+                            }
+                        }
+                    }
+                    // unten links 
+                    if (xAlt > xNeu && yAlt < yNeu)
+                    {
+                        for (int i = xAlt - 1; i > xNeu; i--)
+                        {
+                            if (FigurenL[i, yAlt + (xAlt - i)].Spieler != null)
+                            {
+                                ok = false;
+                            }
+                        }
+                    }
+                    
+                    break;
+                #endregion
+
+                case "Springer":
+                    ok = true;
+
+                    break;
+
+                case "Dame":
+                    if (xAlt == xNeu)
+                    {
+                        if (yAlt > yNeu)
+                        {
+                            for (int y = yAlt - 1; y > yNeu; y--)
+                            {
+                                if (FigurenL[xAlt, y].Spieler != null)
+                                {
+                                    ok = false;
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            for (int y = yAlt + 1; y < yNeu; y++)
+                            {
+                                if (FigurenL[xAlt, y].Spieler != null)
+                                {
+                                    ok = false;
+                                }
+                            }
+                        }
+
+                    }
+                    else if(yAlt == yNeu)
+                    {
+                        if (xAlt > xNeu)
+                        {
+                            for (int x = xAlt - 1; x > xNeu; x--)
+                            {
+                                if (FigurenL[x, yAlt].Spieler != null)
+                                {
+                                    ok = false;
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            for (int x = xAlt + 1; x < xNeu; x++)
+                            {
+                                if (FigurenL[x, yAlt].Spieler != null)
+                                {
+                                    ok = false;
+                                }
+                            }
+                        }
+                    }  
+                    if (xAlt < xNeu && yAlt < yNeu)
+                    {
+                        for (int i = xAlt + 1; i < xNeu; i++)
+                        {
+                            if (FigurenL[i, (i + yAlt) - xAlt].Spieler != null)
+                            {
+                                ok = false;
+                            }
+                        }
+                    }
+                    // oben links (geht)
+                    if (xAlt > xNeu && yAlt > yNeu)
+                    {
+                        for (int i = xAlt - 1; i > xNeu; i--)
+                        {
+                            if (FigurenL[i, yAlt - (xAlt - i)].Spieler != null)
+                            {
+                                ok = false;
+                            }
+                        }
+                    }
+                    // oben rechts (geht)
+                    if (xAlt < xNeu && yAlt > yNeu)
+                    {
+                        for (int i = xAlt + 1; i < xNeu; i++)
+                        {
+                            if (FigurenL[i, yAlt - (i - xAlt)].Spieler != null)
+                            {
+                                ok = false;
+                            }
+                        }
+                    }
+                    // unten links 
+                    if (xAlt > xNeu && yAlt < yNeu)
+                    {
+                        for (int i = xAlt - 1; i > xNeu; i--)
+                        {
+                            if (FigurenL[i, yAlt + (xAlt - i)].Spieler != null)
+                            {
+                                ok = false;
+                            }
+                        }
+                    }
+
+                    break;
+
+                case "König":
+                    ok = true;
+
+                    break;    
+                default:
+                    break;                    
             }
             return ok;
+        }
+
+        private bool Schach()
+        {
+            bool schach = false;
+            int xKönig = 0;
+            int yKönig = 0;
+
+            for (int y = 0; y < 8; y++)
+            {
+                for (int x = 0; x < 8; x++)
+                {
+                    if (FigurenL[x,y].Rolle == "König")
+                    {
+                        if (AktiverSpieler == "weiß" && FigurenL[x, y].Spieler == "schwarz")
+                        {
+                            xKönig = x;
+                            yKönig = y;
+                        }
+                        else
+                        {
+                            xKönig = x;
+                            yKönig = y;
+                        }   
+                    }                    
+                }
+            }
+
+            for (int y = 0; y < 8; y++)
+            {
+                for (int x = 0; x < 8; x++)
+                {
+                    if (FigurenL[x,y].Spieler == AktiverSpieler)
+                    {
+                        try
+                        {
+                            schach = BewegungOK(FigurenL[x, y], x, y, xKönig, yKönig);
+                            if (schach == true)
+                            {
+                                return true;
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            schach = false;
+                        }
+                    }
+                }
+            }
+
+            return schach;
+        }
+
+        private bool BewegungOK(Figur F, int PositionXAlt , int PositionYAlt, int x , int y)
+        {
+            bool ok = true;
+
+            #region Logik
+            switch (FigurenL[AuswahlArrayX, AuswahlArrayY].Rolle)
+            {
+                case "Bauer":
+                    ok = Verwaltung.PawnMovement(AuswahlArrayX, AuswahlArrayY, x, y, FigurenL[AuswahlArrayX, AuswahlArrayY].Spieler);
+                    if (ok == true)
+                    {
+                        ok = FigurDazwischen(F, PositionXAlt, PositionYAlt, x, y);
+                    }
+                    if (FigurenL[AuswahlArrayX, AuswahlArrayY].Spieler == "weiß")
+                    {
+                        if (FigurenL[AuswahlArrayX + 1, AuswahlArrayY - 1] == FigurenL[x, y] || FigurenL[AuswahlArrayX - 1, AuswahlArrayY -1] == FigurenL[x, y])
+                        {
+                            if (FigurenL[x, y].Spieler == "schwarz")
+                            {
+                                ok = true;
+                            }                            
+                        } 
+                    }
+                    else
+                    {
+                        if (FigurenL[AuswahlArrayX + 1, AuswahlArrayY + 1] == FigurenL[x, y] || FigurenL[AuswahlArrayX - 1, AuswahlArrayY + 1] == FigurenL[x, y])
+                        {
+                            if (FigurenL[x, y].Spieler == "weiß")
+                            {
+                                ok = true;
+                            }
+                        } 
+                    }
+                    
+                    
+
+                    break;
+
+                case "Turm":
+                    ok = Verwaltung.Movement(AuswahlArrayX, AuswahlArrayY, x, y);
+                    if (ok == true)
+                    {
+                        ok = FigurDazwischen(F, PositionXAlt, PositionYAlt, x, y);
+                    }
+
+                    break;
+
+                case "Läufer":
+                    ok = Verwaltung.BishopMovement(AuswahlArrayX, AuswahlArrayY, x, y);
+                    if (ok == true)
+                    {
+                        ok = FigurDazwischen(F, PositionXAlt, PositionYAlt, x, y);
+                    }
+
+                    break;
+
+                case "Springer":
+                    ok = Verwaltung.HorseMovement(AuswahlArrayX, AuswahlArrayY, x, y);
+
+                    break;
+
+                case "Dame":
+                    ok = Verwaltung.QueenMovement(AuswahlArrayX, AuswahlArrayY, x, y);
+                    if (ok == true)
+                    {
+                        ok = FigurDazwischen(F, PositionXAlt, PositionYAlt, x, y);
+                    }
+
+                    break;
+
+                case "König":
+                    ok = Verwaltung.KingMovement(AuswahlArrayX, AuswahlArrayY, x, y);
+
+                    break;
+
+                default:
+                    ok = false;
+                    break;
+            }
+            #endregion
+            return ok;            
         }
     }
 }

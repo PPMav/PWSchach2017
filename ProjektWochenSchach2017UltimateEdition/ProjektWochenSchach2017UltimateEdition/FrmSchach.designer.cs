@@ -44,6 +44,8 @@
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.lblSpieler = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -190,11 +192,33 @@
             this.label16.TabIndex = 80;
             this.label16.Text = "1";
             // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.Location = new System.Drawing.Point(41, 499);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(151, 24);
+            this.label17.TabIndex = 81;
+            this.label17.Text = "Aktiver Spieler:";
+            // 
+            // lblSpieler
+            // 
+            this.lblSpieler.AutoSize = true;
+            this.lblSpieler.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSpieler.Location = new System.Drawing.Point(229, 499);
+            this.lblSpieler.Name = "lblSpieler";
+            this.lblSpieler.Size = new System.Drawing.Size(58, 24);
+            this.lblSpieler.TabIndex = 82;
+            this.lblSpieler.Text = "Weiß";
+            // 
             // FrmSchach
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(505, 498);
+            this.ClientSize = new System.Drawing.Size(505, 532);
+            this.Controls.Add(this.lblSpieler);
+            this.Controls.Add(this.label17);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label14);
@@ -211,8 +235,10 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.Name = "FrmSchach";
-            this.Text = "Form1";
+            this.Text = "xXUltimateSchachXx";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -236,6 +262,8 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label lblSpieler;
 
     }
 }
