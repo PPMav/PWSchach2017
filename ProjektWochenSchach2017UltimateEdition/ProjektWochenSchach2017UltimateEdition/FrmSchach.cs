@@ -18,7 +18,13 @@ namespace SchachTest
         public List<Figur> Figuren = new List<Figur>();
         List<PictureBox> Pbx = new List<PictureBox>();
         Figur[,] FigurenL = new Figur[8, 8];
-        PictureBox[,] PictureL = new PictureBox[8, 8];
+        PictureBox[,] PictureL = new PictureBox[8, 8];        
+        int MouseXAlt;
+        int MouseYAlt;
+        int AuswahlArrayX;
+        int AuswahlArrayY;
+        bool Auswahl = true;
+        string[,] OriginalFarbe = new string[8,8];
         #endregion
 
         public FrmSchach()
@@ -155,13 +161,19 @@ namespace SchachTest
                             FigurenL[x, y].Spieler = "schwarz";
                             //System.IO.Directory.GetCurrentDirectory()
                             PictureL[x, y].BackgroundImage = Image.FromFile(@"..\..\..\figuren\ds.PNG");
+                            //PictureL[x, y].BackgroundImage = ProjektWochenSchach2017UltimateEdition.Properties.Resources.
                         }
                         else
                         {
                             PictureL[x, y].BackgroundImage = Image.FromFile(@"..\..\..\figuren\dw.PNG");
                         }
+                    }
                     #endregion
-                        
+
+                    else
+                    {
+                        FigurenL[x, y] = new Figur();                        
+                        FigurenL[x, y].Rolle = "none";
                     }
                     positionX = positionX + 50;
                 }
@@ -183,11 +195,13 @@ namespace SchachTest
                     PictureL[x, y] = pb;                    
                     if (positionY % 100 == 0 && positionX % 100 == 0 || positionY % 100 == 50 && positionX % 100 == 50)
                     {
-                        pb.BackColor = Color.Gray;                        
+                        pb.BackColor = Color.Gray;
+                        OriginalFarbe[x, y] = "Gray";
                     }
                     else
                     {                        
-                        pb.BackColor = Color.White;                        
+                        pb.BackColor = Color.White;
+                        OriginalFarbe[x, y] = "White";
                     }                    
                     pb.Location = new System.Drawing.Point(positionX, positionY);
                     pb.Size = new System.Drawing.Size(50, 50);
@@ -209,23 +223,112 @@ namespace SchachTest
 
         }
 
+        //private void ZugMöglich()
+
         private void FigurBewegen(object sender, EventArgs e)
         {
-            int MouseX = Convert.ToInt32(this.PointToClient(Cursor.Position).X);
-            int MouseY = Convert.ToInt32(this.PointToClient(Cursor.Position).Y);
-            for (int y = 0; y < 8; y++)
+            #region Auswahl
+            if (Auswahl == true)
             {
-                for (int x = 0; x < 8; x++)
-                {                    
-                    if (MouseX >= PictureL[x,y].Location.X && MouseX < (PictureL[x,y].Location.X + 50))
+                MouseXAlt = Convert.ToInt32(this.PointToClient(Cursor.Position).X);
+                MouseYAlt = Convert.ToInt32(this.PointToClient(Cursor.Position).Y);
+                for (int y = 0; y < 8; y++)
+                {
+                    for (int x = 0; x < 8; x++)
                     {
-                        if (MouseY >= PictureL[x, y].Location.Y && MouseY < (PictureL[x, y].Location.Y + 50))
+                        if (MouseXAlt >= PictureL[x, y].Location.X && MouseXAlt < (PictureL[x, y].Location.X + 50))
                         {
-                            PictureL[x, y + 2].BackgroundImage = Image.FromFile(@"..\..\..\figuren\tw.PNG");
+                            if (MouseYAlt >= PictureL[x, y].Location.Y && MouseYAlt < (PictureL[x, y].Location.Y + 50))
+                            {
+                                AuswahlArrayX = x;
+                                AuswahlArrayY = y;
+                                PictureL[x, y].BackColor = Color.Aqua; 
+                            }
                         }
-                    }                                                       
+                    }
                 }
-            }            
+
+
+                Auswahl = false;
+            }
+            #endregion
+
+            #region Bewegung
+            else
+            {
+                int MouseX = Convert.ToInt32(this.PointToClient(Cursor.Position).X);
+                int MouseY = Convert.ToInt32(this.PointToClient(Cursor.Position).Y);
+                bool ok = true;
+                Auswahl = true;
+                if (OriginalFarbe[AuswahlArrayX,AuswahlArrayY] == "Gray")
+                {
+                    PictureL[AuswahlArrayX, AuswahlArrayY].BackColor = Color.Gray;         
+                }
+                else
+                {
+                    PictureL[AuswahlArrayX, AuswahlArrayY].BackColor = Color.White;        
+                }
+
+                for (int y = 0; y < 8; y++)
+                {
+                    for (int x = 0; x < 8; x++)
+                    {
+                        if (MouseX >= PictureL[x, y].Location.X && MouseX < (PictureL[x, y].Location.X + 50))
+                        {
+                            if (MouseY >= PictureL[x, y].Location.Y && MouseY < (PictureL[x, y].Location.Y + 50))
+                            {
+                                #region Logik
+                                switch (FigurenL[AuswahlArrayX, AuswahlArrayY].Rolle)
+                                {
+                                    case "Bauer":
+                                        ok = true;
+
+                                        break;
+
+                                    case "Turm":
+                                        ok = BewegungOK(FigurenL[AuswahlArrayX,AuswahlArrayY], AuswahlArrayX, AuswahlArrayY, x, y);
+
+                                        break;
+
+                                    case "Läufer":
+                                        ok = true;
+
+                                        break;
+
+                                    case "Springer":
+                                        ok = false;
+
+                                        break;
+
+                                    case "Dame":
+                                        ok = true;
+
+                                        break;
+
+                                    case "König":
+                                        ok = true;
+
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                                #endregion
+
+                                if (ok == true)
+                                {
+                                    if (PictureL[x, y] != PictureL[AuswahlArrayX, AuswahlArrayY])
+                                    {
+                                        PictureL[x, y].BackgroundImage = PictureL[AuswahlArrayX, AuswahlArrayY].BackgroundImage;
+                                        PictureL[AuswahlArrayX, AuswahlArrayY].BackgroundImage = null;
+                                    } 
+                                }                                                               
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
         }       
         
         private bool BewegungOK(Figur F, int PositionXAlt , int PositionYAlt, int PositionXNeu , int PositionYNeu)
@@ -285,7 +388,7 @@ namespace SchachTest
                 {
                     if (PositionYAlt > PositionYNeu)
                     {
-                        for (int y = PositionXAlt; y > (PositionXNeu); y--)
+                        for (int y = PositionXAlt; y < (PositionXNeu); y--)
                         {
                             // Keine eigenen Figuren angreifen/überspringen
                             if (FigurenL[PositionXAlt, PositionYAlt].Spieler == FigurenL[PositionXNeu, y].Spieler)
