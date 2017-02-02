@@ -14,37 +14,30 @@ namespace SchachTest
     public partial class FrmSchach : Form
     {
         #region Var
-        bool Start = true;
-        bool ErsterZug = true;
+        
         //public List<Figur> Figuren = new List<Figur>();
         //List<PictureBox> Pbx = new List<PictureBox>();
         Figur[,] FigurenL = new Figur[8, 8];
-        PictureBox[,] PictureL = new PictureBox[8, 8];        
+        PictureBox[,] PictureL = new PictureBox[8, 8];
         int MouseXAlt;
         int MouseYAlt;
         int AuswahlArrayX;
         int AuswahlArrayY;
         bool Auswahl = true;
-        string[,] OriginalFarbe = new string[8,8];
+        string[,] OriginalFarbe = new string[8, 8];
         bool[,] Möglich = new bool[8, 8];
         string AktiverSpieler = "weiß";
         bool SchachBool;
         #endregion
 
         public FrmSchach()
-        {            
+        {
             InitializeComponent();
-            if (Start == true)
-            {                
-                PbxErstellen();
-                FigurenErzeugen();
-            }            
-        }        
-       
+        }
+
         private void FigurenErzeugen()
         {
             #region
-            Start = false;
             int positionX = 50;
             int positionY = 50;
             for (int y = 0; y < 8; y++)
@@ -80,7 +73,7 @@ namespace SchachTest
                         FigurenL[x, y].Aktiv = true;
                         FigurenL[x, y].Rolle = "Turm";
                         FigurenL[x, y].Spieler = "weiß";
-                        PictureL[x, y].BackgroundImage = Image.FromFile(@"..\..\..\figuren\tw.PNG");
+                        PictureL[x, y].BackgroundImage = ProjektWochenSchach2017UltimateEdition.Properties.Resources.tw;
                     }
                     else if (positionY == 50 && (positionX == 50 || positionX == 400))
                     {
@@ -89,7 +82,7 @@ namespace SchachTest
                         FigurenL[x, y].Aktiv = true;
                         FigurenL[x, y].Rolle = "Turm";
                         FigurenL[x, y].Spieler = "schwarz";
-                        PictureL[x, y].BackgroundImage = Image.FromFile(@"..\..\..\figuren\ts.PNG");
+                        PictureL[x, y].BackgroundImage = ProjektWochenSchach2017UltimateEdition.Properties.Resources.ts;
                     }
                     #endregion
 
@@ -177,7 +170,7 @@ namespace SchachTest
 
                     else
                     {
-                        FigurenL[x, y] = new Figur();                        
+                        FigurenL[x, y] = new Figur();
                         FigurenL[x, y].Rolle = "none";
                     }
                     positionX = positionX + 50;
@@ -186,48 +179,69 @@ namespace SchachTest
                 positionY = positionY + 50;
             }
             #endregion
-            ErsterZug = false;
+      
         }
-                       
+
         private void PbxErstellen()
         {
+            int posXLabels = 70;
+            string[] labelLetters = new string[] { "A", "B", "C", "D", "E", "F", "G", "H" };
+            for (int i = 0; i < 8; i++)
+            {
+                Label label = new Label();
+                label.AutoSize = true;
+                label.Location = new Point(posXLabels, 35);
+                label.Size = new Size(20, 13);
+                label.Text = labelLetters[i];
+                Controls.Add(label);
+                posXLabels += 50;
+            }
+
+            int posYLabels = 70;
+            string[] labelNumbers = new string[] { "1", "2", "3", "4", "5", "6", "7", "8" };
+            for (int i = 0; i < 8; i++)
+            {
+                Label label = new Label();
+                label.AutoSize = true;
+                label.Location = new Point(35, posYLabels);
+                label.Size = new Size(20, 13);
+                label.Text = labelNumbers[(labelNumbers.Length - 1) - i];
+                Controls.Add(label);
+                posYLabels += 50;
+            }
+
             int positionX = 50;
-            int positionY = 50;            
+            int positionY = 50;
             for (int y = 0; y < 8; y++)
             {
                 for (int x = 0; x < 8; x++)
                 {
                     PictureBox pb = new PictureBox();
-                    PictureL[x, y] = pb;                    
+                    PictureL[x, y] = new PictureBox();
                     if (positionY % 100 == 0 && positionX % 100 == 0 || positionY % 100 == 50 && positionX % 100 == 50)
                     {
-                        pb.BackColor = Color.Gray;
+                        PictureL[x, y].BackColor = Color.Gray;
                         OriginalFarbe[x, y] = "Gray";
                     }
                     else
-                    {                        
-                        pb.BackColor = Color.White;
+                    {
+                        PictureL[x, y].BackColor = Color.White;
                         OriginalFarbe[x, y] = "White";
-                    }                    
-                    pb.Location = new System.Drawing.Point(positionX, positionY);
-                    pb.Size = new System.Drawing.Size(50, 50);
-                    pb.TabIndex = 49;
-                    pb.TabStop = false;
-                    pb.Click += new System.EventHandler(FigurBewegen);
+                    }
+                    PictureL[x, y].Location = new System.Drawing.Point(positionX, positionY);
+                    PictureL[x, y].Size = new System.Drawing.Size(50, 50);
+                    PictureL[x, y].TabIndex = 49;
+                    PictureL[x, y].TabStop = false;
+                    PictureL[x, y].Click += new System.EventHandler(FigurBewegen);
                     positionX = positionX + 50;
-                    pb.BorderStyle = BorderStyle.FixedSingle;
-                    Controls.Add(pb);
+                    PictureL[x, y].BorderStyle = BorderStyle.FixedSingle;
+                    Controls.Add(PictureL[x, y]);
 
                 }
                 positionX = 50;
                 positionY = positionY + 50;
             }
-        }        
-        
-        private void FrmSchach_Load(object sender, EventArgs e)
-        {
-
-        }        
+        }
 
         private void FigurBewegen(object sender, EventArgs e)
         {
@@ -246,7 +260,7 @@ namespace SchachTest
                             {
                                 AuswahlArrayX = x;
                                 AuswahlArrayY = y;
-                                PictureL[x, y].BackColor = Color.Aqua; 
+                                PictureL[x, y].BackColor = Color.Aqua;
                             }
                         }
                     }
@@ -264,13 +278,13 @@ namespace SchachTest
                 int MouseY = Convert.ToInt32(this.PointToClient(Cursor.Position).Y);
                 bool ok = true;
                 Auswahl = true;
-                if (OriginalFarbe[AuswahlArrayX,AuswahlArrayY] == "Gray")
+                if (OriginalFarbe[AuswahlArrayX, AuswahlArrayY] == "Gray")
                 {
-                    PictureL[AuswahlArrayX, AuswahlArrayY].BackColor = Color.Gray;         
+                    PictureL[AuswahlArrayX, AuswahlArrayY].BackColor = Color.Gray;
                 }
                 else
                 {
-                    PictureL[AuswahlArrayX, AuswahlArrayY].BackColor = Color.White;        
+                    PictureL[AuswahlArrayX, AuswahlArrayY].BackColor = Color.White;
                 }
 
                 for (int y = 0; y < 8; y++)
@@ -300,7 +314,7 @@ namespace SchachTest
                                     if (PictureL[x, y] != PictureL[AuswahlArrayX, AuswahlArrayY])
                                     {
                                         if (FigurenL[x, y].Spieler != FigurenL[AuswahlArrayX, AuswahlArrayY].Spieler)
-                                        {                                            
+                                        {
                                             PictureL[x, y].BackgroundImage = PictureL[AuswahlArrayX, AuswahlArrayY].BackgroundImage;
                                             FigurenL[x, y] = FigurenL[AuswahlArrayX, AuswahlArrayY];
                                             FigurenL[AuswahlArrayX, AuswahlArrayY] = null;
@@ -308,11 +322,11 @@ namespace SchachTest
                                             FigurenL[AuswahlArrayX, AuswahlArrayY].Rolle = "none";
                                             PictureL[AuswahlArrayX, AuswahlArrayY].BackgroundImage = null;
                                             //SchachBool = Schach();
-                                            
+
                                             if (AktiverSpieler == "weiß")
                                             {
                                                 AktiverSpieler = "schwarz";
-                                                lblSpieler.Text = "Schwarz";
+                                                lblSpieler.Text = "Aktiver Spieler: schwarz";
                                                 if (SchachBool == true)
                                                 {
                                                     MessageBox.Show("Spieler" + AktiverSpieler + "steht im Schach");
@@ -321,24 +335,24 @@ namespace SchachTest
                                             else
                                             {
                                                 AktiverSpieler = "weiß";
-                                                lblSpieler.Text = "Weiß";
+                                                lblSpieler.Text = "Aktiver Spieler: weiß";
                                                 if (SchachBool == true)
                                                 {
                                                     MessageBox.Show("Spieler" + AktiverSpieler + "steht im Schach");
                                                 }
-                                            }                                            
-                                        }                                        
-                                    } 
-                                }                                                               
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
             #endregion
-        }       
-        
-        private bool FigurDazwischen(Figur F, int xAlt , int yAlt, int xNeu , int yNeu)
+        }
+
+        private bool FigurDazwischen(Figur F, int xAlt, int yAlt, int xNeu, int yNeu)
         {
             bool ok = true;
             switch (F.Rolle)
@@ -356,7 +370,7 @@ namespace SchachTest
                     else if (F.Spieler == "schwarz" && yAlt == 1 && yNeu == 3 && FigurenL[xNeu, (yAlt + 1)].Spieler != null)
                     {
                         ok = false;
-                    }                    
+                    }
 
                     break;
                 #endregion
@@ -366,18 +380,18 @@ namespace SchachTest
                     if (xAlt == xNeu)
                     {
                         if (yAlt > yNeu)
-	                    {
-		                    for (int y = yAlt - 1; y > yNeu; y--)
+                        {
+                            for (int y = yAlt - 1; y > yNeu; y--)
                             {
                                 if (FigurenL[xAlt, y].Spieler != null)
                                 {
                                     ok = false;
                                 }
-	
+
                             }
-	                    }
+                        }
                         else
-	                    {
+                        {
                             for (int y = yAlt + 1; y < yNeu; y++)
                             {
                                 if (FigurenL[xAlt, y].Spieler != null)
@@ -385,8 +399,8 @@ namespace SchachTest
                                     ok = false;
                                 }
                             }
-	                    }
-                        
+                        }
+
                     }
                     else
                     {
@@ -411,7 +425,7 @@ namespace SchachTest
                                 }
                             }
                         }
-                    }                    
+                    }
 
                     break;
                 #endregion
@@ -462,7 +476,7 @@ namespace SchachTest
                             }
                         }
                     }
-                    
+
                     break;
                 #endregion
 
@@ -498,7 +512,7 @@ namespace SchachTest
                         }
 
                     }
-                    else if(yAlt == yNeu)
+                    else if (yAlt == yNeu)
                     {
                         if (xAlt > xNeu)
                         {
@@ -521,7 +535,7 @@ namespace SchachTest
                                 }
                             }
                         }
-                    }  
+                    }
                     if (xAlt < xNeu && yAlt < yNeu)
                     {
                         for (int i = xAlt + 1; i < xNeu; i++)
@@ -572,9 +586,9 @@ namespace SchachTest
                 case "König":
                     ok = true;
 
-                    break;    
+                    break;
                 default:
-                    break;                    
+                    break;
             }
             return ok;
         }
@@ -589,7 +603,7 @@ namespace SchachTest
             {
                 for (int x = 0; x < 8; x++)
                 {
-                    if (FigurenL[x,y].Rolle == "König")
+                    if (FigurenL[x, y].Rolle == "König")
                     {
                         if (AktiverSpieler == "weiß" && FigurenL[x, y].Spieler == "schwarz")
                         {
@@ -601,8 +615,8 @@ namespace SchachTest
                         {
                             xKönig = x;
                             yKönig = y;
-                        }   
-                    }                    
+                        }
+                    }
                 }
             }
 
@@ -610,16 +624,16 @@ namespace SchachTest
             {
                 for (int x = 0; x < 8; x++)
                 {
-                    if (FigurenL[x,y].Spieler == AktiverSpieler)
+                    if (FigurenL[x, y].Spieler == AktiverSpieler)
                     {
-                       
-                            schach = BewegungOK(FigurenL[x, y], x, y, xKönig, yKönig);                            
-                            if (schach == true)
-                            {
-                                //MessageBox.Show(FigurenL[x, y].Rolle + FigurenL[x, y].Spieler + x + y + xKönig + yKönig);
-                                return true;
-                            }
-                        
+
+                        schach = BewegungOK(FigurenL[x, y], x, y, xKönig, yKönig);
+                        if (schach == true)
+                        {
+                            //MessageBox.Show(FigurenL[x, y].Rolle + FigurenL[x, y].Spieler + x + y + xKönig + yKönig);
+                            return true;
+                        }
+
                     }
                 }
             }
@@ -627,7 +641,7 @@ namespace SchachTest
             return schach;
         }
 
-        private bool BewegungOK(Figur F, int PositionXAlt , int PositionYAlt, int x , int y)
+        private bool BewegungOK(Figur F, int PositionXAlt, int PositionYAlt, int x, int y)
         {
             bool ok = true;
 
@@ -637,11 +651,11 @@ namespace SchachTest
                 #region Bauer
                 case "Bauer":
                     ok = Verwaltung.PawnMovement(AuswahlArrayX, AuswahlArrayY, x, y, FigurenL[AuswahlArrayX, AuswahlArrayY].Spieler);
-                    
+
                     if (ok == true)
                     {
                         ok = FigurDazwischen(F, PositionXAlt, PositionYAlt, x, y);
-                    }                    
+                    }
                     if (FigurenL[AuswahlArrayX, AuswahlArrayY].Spieler == "weiß")
                     {
                         try
@@ -652,12 +666,12 @@ namespace SchachTest
                                 {
                                     ok = true;
                                 }
-                            } 
+                            }
                         }
                         catch (Exception)
-                        {                          
-                            
-                        }                        
+                        {
+
+                        }
                     }
                     else
                     {
@@ -669,13 +683,13 @@ namespace SchachTest
                                 {
                                     ok = true;
                                 }
-                            } 
+                            }
                         }
                         catch (Exception)
-                        {                            
-                           
-                        }                        
-                    }  
+                        {
+
+                        }
+                    }
 
                     break;
                 #endregion
@@ -722,7 +736,33 @@ namespace SchachTest
                     break;
             }
             #endregion
-            return ok;            
+            return ok;
+        }
+
+        private void msiNeuesSpiel_Click(object sender, EventArgs e)
+        {
+            Array.Clear(FigurenL, 0, FigurenL.Length);
+            Array.Clear(PictureL, 0, PictureL.Length);
+
+            for (int i = 0; i < Controls.Count; i++)
+            {
+                if (Controls[i] is PictureBox)
+                {
+                    Controls.RemoveAt(i);
+                    i--;
+                }
+            }
+
+            PbxErstellen();
+            FigurenErzeugen();
+            AktiverSpieler = "weiß";
+            lblSpieler.Text = "Aktiver Spieler: weiß";
+        }
+
+        private void FrmSchach_Load(object sender, EventArgs e)
+        {
+            PbxErstellen();
+            FigurenErzeugen();
         }
     }
 }
