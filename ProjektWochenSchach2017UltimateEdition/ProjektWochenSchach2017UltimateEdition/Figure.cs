@@ -8,7 +8,7 @@ namespace SchachTest
 {
     public class Figur
     {
-        public bool Spieler;
+        public string Spieler;
         public string Rolle;
         //public string PositionX;
         //public string PositionY;
